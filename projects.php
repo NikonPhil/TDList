@@ -6,14 +6,21 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <title>Add a new project to the database</title>
-        <link rel="stylesheet" type="text/css" href="TDList.css">
+        <!-- <link rel="stylesheet" type="text/css" href="TDList.css"> -->
     </head>
     <body>
-        <?php include 'Header.php';
-        // put your code here
-        echo '<h1>List of existing Projects</h1>';                                // edit this line
+        <?php include 'header1.php'; ?>
+        <div class="container-fluid">
+        <h1>List of existing Projects</h1> 
+        </div>
+        <?php
+        
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
         $page_id = "Project";                                                      // edit this line
         if(! $conn) {
@@ -47,50 +54,49 @@ and open the template in the editor.
         // echo $sql . "<br>";      
         $result = mysqli_query($conn, $sql);
         
-        // show current data in a table
-        echo '<table class="t01">';
-          echo '<tr>';
-              echo '<th>Project</th>';                                             // Change table header name
-              echo '<th>Project Description</th>';
-          echo '</tr>';
-          while ($row = mysqli_fetch_array($result)) {
-            echo '<tr>';
-              echo '<td>' . $row['project_name'] . '</td>';                             // Change variable name
-              echo '<td>' . $row['project_description'] . '</td>';
-            echo '</tr>';
-          }
-        echo '</table>';
-        echo '<hr>';
-        
+        // show current data in a table ?>
+        <div class="container-fluid">
+           <div class="row">
+              <div class="col-sm-4">
+                <table class="table table-bordered table-sm table-striped">
+                  <thead class="thead-dark">
+                    <th>Project</th>
+                    <th>Project Description</th>
+                </thead>
+                <?php
+                    while ($row = mysqli_fetch_array($result)) {
+                    echo '<tr>';
+                    echo '<td>' . $row['project_name'] . '</td>';
+                    echo '<td>' . $row['project_description'] . '</td>';
+                    echo '</tr>';
+                    } ?>
+                </table>
+              </div>
+             <div class="col-sm-8">
+             </div>
+          </div>
+             <hr>
+         </div>
+        <?php
         // display form to add new data, (select a project)
-        // set up query for category name..
-        echo '<p>To add a new project enter the name and description '
-                . 'and submit</p>';                                                 // Change the title
-        echo '<table class="entry">';                                               // Open the main table
-            echo '<tr>';                                                            // Create the first row
-                echo '<form method="post">';                                    // set up the form, note single quotes are used to allow the use of double quotes inside the statement
-                // echo '<th></th>';
-                echo '<th align="center">Project Name</th>';
-                echo '<th align="center">Project Description</th>';
-            echo '</tr>';
-            echo '<tr>';
-                // echo '<td align="right"></td>';                              // Change the title
-                echo '<td align="center"><input name = "prname" type = "text"></td>';              // Change the reference names
-                echo '<td align="center"><input name="prdesc" type = "text"></td>';
-            echo '</tr>';                                                           // Close the first row
-            echo '<tr>';                                                            // Open the second row
-                echo '<td colspan="3" align="right">';                              // open the first cell        
-                // create a button
-                  echo '<input class="success" type="submit" value="Add ' . $page_id 
-                        . '" name="SubmitButton"/>'; 
-                echo '</td>';                                                       // Close the first cell
-            echo '</tr>';                                                           // Close the second row
-                    echo "</form>";                                                 // close the form
-        echo '</table>';                                                            // Close the table
-        
-        // handle input data
-        // post data
-        
+        // set up query for category name.. ?>
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-4">
+                <p>To add a new project enter the name and description and submit</p>
+                  <form method="post">
+                      <h3>Project Name</h3>
+                        <input name = "prname" type = "text">
+                      <h3>Project Description</h3>
+                        <input name="prdesc" type = "text">
+                        <button type="button" class="btn btn-info" value="Add Project">Add Project</button> 
+                  </form>
+              </div>
+            </div>
+          </div>
+        <?php  
+            include 'footer.php'; 
         ?>
+    
     </body>
 </html>
