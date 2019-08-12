@@ -5,15 +5,25 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>Stub for category data</title>
-        <link rel="stylesheet" type="text/css" href="TDList.css">
-    </head>
-    <body>
-        <?php include 'Header.php';
-        // put your code here
-        echo '<h1>List of existing Statuses</h1>';                                // edit this line
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        
+
+    <title>Status Page</title>
+    <!-- <link rel="stylesheet" type="text/css" href="TDList.css"> -->
+        
+  </head>
+  <body>
+        <?php include 'header1.php'; ?>
+        <!-- put your code here -->
+        <div class="container-fluid">
+        <h1>List of existing Statuses</h1> 
+        </div>
+        <?php
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
         $page_id = "Status";                                                      // edit this line
         if(! $conn) {
@@ -46,55 +56,51 @@ and open the template in the editor.
         $sql = "SELECT td_status FROM td_status";                                  // Change sql table / field references
                 
         $result = mysqli_query($conn, $sql);
-        
-        // show current data in a table
-        echo '<table class="t01">';
-          echo '<tr>';
-              echo '<th>Status</th>';                                             // Change table header name
-              
-          echo '</tr>';
-          while ($row = mysqli_fetch_array($result)) {
-            echo '<tr>';
-              echo '<td>' . $row['td_status'] . '</td>';                             // Change variable name
-              // echo '<td>' . $row['filename'] . '</td>';
-            echo '</tr>';
-          }
-        echo '</table>';
-        echo '<hr>';
-        
-        // display form to add new data, (select a project)
-        // set up query for status name..
-        echo '<p>To add a new status enter the name '
-                . 'and submit</p>';                                                 // Change the title
-        echo '<table class="entry">';                                               // Open the main table
-            echo '<tr>';                                                            // Create the first row
-                echo '<td>';                                                        // Create the first cell
-                    echo '<form method="post">';                                    // set up the form, note single quotes are used to allow the use of double quotes inside the statement
-                    //echo '<select class="sel" name="sname">';                                   // set a name for the $_post variable
-                      //  foreach ($result as $row) {                                 // output each filename to an option
-                        //  echo "<option value=\"{$row['status']}\">"
-                          //  . "{$row['project_name']}</option>";
-                        //}
-                    // echo "</select>";                                            // close the selection
-                echo '</td>';                                                       // Close the first cell
-                echo '<td align="right">Status</td>';                             // Change the title
-                echo '<td><input name = "sname" type = "text" . 
-                           id = "sname"></td>';                                     // Change the reference names
-            echo '</tr>';                                                           // Close the first row
-            echo '<tr>';                                                            // Open the second row
-                echo '<td colspan="3" align="right">';                                                        // open the first cell        
-                // create a button
-                  echo '<input class="success" type="submit" value="' . $page_id 
-                        . '" name="SubmitButton"/>'; 
-                echo '</td>';                                                       // Close the first cell
-            echo '</tr>';                                                           // Close the second row
-                    echo "</form>";                                                 // close the form
-        echo '</table>';                                                            // Close the table
-        
-        // handle input data
-        // post data
-        
         ?>
+        <!-- show current data in a table -->
+       <div class="container-fluid">
+           <div class="row">
+              <div class="col-sm-4">
+                <table class="table table-bordered table-sm table-striped">
+                  <thead class="thead-dark">
+                    <th>Status</th>                                                
+                  </thead>
+                    <?php
+                        while ($row = mysqli_fetch_array($result)) {
+                          echo '<tr>';
+                            echo '<td>' . $row['td_status'] . '</td>';                             // Change variable name
+                            // echo '<td>' . $row['filename'] . '</td>';
+                          echo '</tr>';
+                        }
+                    ?>
+                </table>
+              </div>
+           <div class="col-sm-8">
+
+           </div>
+          </div>
+          <hr>
+        </div>
+
+
+        <!-- display form to add new data, (select a project)
+        // set up query for status name.. -->
+        <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-4">
+                    <p>To add a new status enter the name and submit</p>                                                 
+                        <form method="post"> 
+                            <h3>Status<h3>
+                                <input name ="sname" type="text" id="sname">
+                           <!-- create a button -->
+                           <button type="button" class="btn btn-info" value="Add Status">Add Status</button> 
+                        </form>       
+              </div>
+              <div class="col-sm-8">
+              </div>
+            </div>
+        </div>
+        <?php  include 'footer.php'; ?>
     </body>
 </html>
 

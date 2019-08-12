@@ -8,16 +8,14 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title></title>
-        <link rel="stylesheet" type="text/css" href="TDList.css">
+        <!-- <link rel="stylesheet" type="text/css" href="TDList.css"> -->
     </head>
     <body>
-        <?php
-        
-        echo "<hr>";
-        echo "<footer>";
-        echo "<h4>By: Phil Burness using Netbeans, Mysql, Apache and PHP</h4>";
-        echo "<p>Some more text</p>";
-        echo "</footer>";
-        ?>
+    <div class="container-fluid fixed-bottom">
+              <footer>
+                  <hr>
+                  <h4 style="text-align: center">By Phil Burness using Netbeans, Mysql, Apache, PHP and Github</h4>
+              </footer>
+    </div>
     </body>
 </html>

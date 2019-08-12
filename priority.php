@@ -6,14 +6,23 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        
         <title>Stub for priority data</title>
-        <link rel="stylesheet" type="text/css" href="TDList.css">
+        <!-- <link rel="stylesheet" type="text/css" href="TDList.css"> -->
     </head>
     <body>
-        <?php include 'Header.php';
-        // put your code here
-        echo '<h1>List of existing priorities</h1>';
+        <?php include 'header1.php'; ?>
+       
+       <div class="container-fluid">
+        <h1>List of existing Priorities</h1> 
+        </div>
+        <?php
+        
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
         $page_id = "Priority";
         if(! $conn) {
@@ -45,53 +54,49 @@ and open the template in the editor.
                 
         $result = mysqli_query($conn, $sql);
         
-        // show current data in a table
-        echo '<table class="t02">';
-          echo '<tr>';
-              echo '<th>Priority</th>';
-              
-          echo '</tr>';
-          while ($row = mysqli_fetch_array($result)) {
-            echo '<tr>';
-              echo '<td>' . $row['priority'] . '</td>';
-              // echo '<td>' . $row['filename'] . '</td>';
-            echo '</tr>';
-          }
-        echo '</table>';
-        echo '<hr>';
+        // show current data in a table ?>
+         <div class="container-fluid">
+           <div class="row">
+              <div class="col-sm-4">
+                <table class="table table-bordered table-sm table-striped">
+                  <thead class="thead-dark">
+                    <th>Status</th>                                                
+                  </thead>
+            <?php
+                while ($row = mysqli_fetch_array($result)) {
+                    echo '<tr>';
+                     echo '<td>' . $row['priority'] . '</td>';
+                    // echo '<td>' . $row['filename'] . '</td>';
+                    echo '</tr>';
+                }
+            ?>
+                </table>
+              </div>
+           <div class="col-sm-8">
+
+           </div>
+          </div>
+             <hr>
+         </div>
         
-        // display form to add new data, (select a project)
-        // set up query for project name..
-        echo '<p>To add a new priority enter the name '
-                . 'and submit</p>';  
-        echo '<table class="entry">';                                               // Open the main table
-            echo '<tr>';                                                            // Create the first row
-                echo '<td>';                                                        // Create the first cell
-                    echo '<form method="post">';                                    // set up the form, note single quotes are used to allow the use of double quotes inside the statement
-                    //echo '<select class="sel" name="pname">';                                   // set a name for the $_post variable
-                      //  foreach ($result as $row) {                                 // output each filename to an option
-                        //  echo "<option value=\"{$row['project_name']}\">"
-                          //  . "{$row['project_name']}</option>";
-                        //}
-                    // echo "</select>";                                                   // close the selection
-                echo '</td>';                                                       // Close the first cell
-                echo '<td align="right">Priority</td>';
-                echo '<td><input name = "pname" type = "text" . 
-                           id = "pname"></td>';
-            echo '</tr>';                                                           // Close the first row
-            echo '<tr>';                                                            // Open the second row
-                echo '<td colspan="3" align="right">';                                                        // open the first cell        
-                // create a button
-                  echo '<input class="success" type="submit" value="' . $page_id 
-                        . '" name="SubmitButton"/>'; 
-                echo '</td>';                                                       // Close the first cell
-            echo '</tr>';                                                           // Close the second row
-                    echo "</form>";                                                 // close the form
-        echo '</table>';                                                            // Close the table
+        <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-4">
+                <p>To add a new priority enter the name and submit</p>      
+                      <form method="post">'
+                       <h3>Priority</h3>
+                       <input name = "pname" type = "text" id = "pname">   
+                       <button type="button" class="btn btn-info" value="Add Status">Add Priority</button>
+                      </form>
+              </div>
+              <div class="col-sm-8">
+
+              </div>
+            </div>
+        </div>
         
-        // handle input data
-        // post data
-        
-        ?>
+       <?php  
+            include 'footer.php'; 
+       ?>
     </body>
 </html>

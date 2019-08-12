@@ -8,6 +8,7 @@
     </head>
     <body>
     <?php
+    echo '<div class="container-fluid">';
     echo "<h1>Simple To-Do Tracker</h1>";
     echo "<hr>";
     echo '<table class="menu">';
@@ -36,12 +37,14 @@
         echo "</tr>";
     echo "</table>";
     echo "<hr>";
+    echo '</div>';
 // echo "<br>";
-
+    echo '<div class="container-fluid">';
     echo "<footer>";
         echo "<hr>";
         echo "<h4>By Phil Burness using Netbeans, Mysql, Apache and PHP</h4>";
     echo "</footer>";
+    echo '</div>';
 
 
 $DBHost = "192.168.0.13";

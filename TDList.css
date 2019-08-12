@@ -124,7 +124,7 @@ and open the template in the editor.
             height: 3px;
             border: none;
             }
-            footer  {
+            .footer  {
                 position: fixed;
                 bottom: 0;
                 width: 100%;
@@ -146,14 +146,14 @@ and open the template in the editor.
                 font-size: inherit;
             }
 
-.btn {
+/* .btn {
   border: none;
   background-color: inherit;
   padding: 14px 28px;
   font-size: 16px;
   cursor: pointer;
   display: inline-block;
-}
+} */
 
 /* Green */
 .success {
