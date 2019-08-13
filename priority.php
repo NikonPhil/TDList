@@ -56,6 +56,7 @@ and open the template in the editor.
         
         // show current data in a table ?>
          <div class="container-fluid">
+          <div style="height: 450px; max-height:450px; overflow-y: scroll">
            <div class="row">
               <div class="col-sm-4">
                 <table class="table table-bordered table-sm table-striped">
@@ -75,6 +76,7 @@ and open the template in the editor.
            <div class="col-sm-8">
 
            </div>
+           </div>
           </div>
              <hr>
          </div>
@@ -83,7 +85,7 @@ and open the template in the editor.
             <div class="row">
               <div class="col-sm-4">
                 <p>To add a new priority enter the name and submit</p>      
-                      <form method="post">'
+                      <form method="post">
                        <h3>Priority</h3>
                        <input name = "pname" type = "text" id = "pname">   
                        <button type="button" class="btn btn-info" value="Add Status">Add Priority</button>

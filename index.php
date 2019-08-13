@@ -118,8 +118,8 @@ and open the template in the editor.
         
         // show current data in a table ?>
         <div class="container-fluid" >
-            <div style="height: 400px; max-height:400px; overflow-y: scroll">
-            <!-- <div class="overflow-auto"> -->
+            <div style="height: 450px; max-height:450px; overflow-y: scroll">
+
              <div class="row">
               <div class="col-sm-12">
                   

@@ -6,14 +6,21 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>Stub for classes data</title>
-        <link rel="stylesheet" type="text/css" href="TDList.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <title>Class Management</title>
+        <!-- <link rel="stylesheet" type="text/css" href="TDList.css"> -->
     </head>
     <body>
-        <?php include 'Header.php';
-        // put your code here
-        echo '<h1>List of existing classes</h1>';
+        <?php include 'header1.php'; 
+        // put your code here ?>
+        <div class="container-fluid">
+        <h1>List of existing Classes</h1> 
+        </div>
+       <?php
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
         $page_id = "Classes";
         if(! $conn) {
@@ -47,53 +54,47 @@ and open the template in the editor.
                 
         $result = mysqli_query($conn, $sql);
         
-        // show current data in a table
-        echo '<table class="t01">';
-          echo '<tr>';
-              echo '<th>Class</th>';
-              
-          echo '</tr>';
-          while ($row = mysqli_fetch_array($result)) {
-            echo '<tr>';
-              echo '<td>' . $row['class'] . '</td>';
-              // echo '<td>' . $row['filename'] . '</td>';
-            echo '</tr>';
-          }
-        echo '</table>';
-        echo '<hr>';
-        
+        // show current data in a table ?>
+        <div class="container-fluid">
+         <div style="height: 450px; max-height:450px; overflow-y: scroll">
+           <div class="row">
+              <div class="col-sm-4">
+                <table class="table table-bordered table-sm table-striped">
+                  <thead class="thead-dark">
+                    <th>Classes</th>                                                
+                  </thead>
+                <?php
+                    while ($row = mysqli_fetch_array($result)) {
+                      echo '<tr>';
+                        echo '<td>' . $row['class'] . '</td>';
+                        // echo '<td>' . $row['filename'] . '</td>';
+                      echo '</tr>';
+                    } ?>
+                </table>
+              </div>
+               <div class="col-sm-8">
+
+           </div>
+           </div>
+         </div>
+             <hr>
+        </div>
+
+       <!--
         // display form to add new data, (select a project)
-        // set up query for project name..
-        echo '<p>To add a new class enter the name '
-                . 'and submit</p>';  
-        echo '<table class="entry">';                                               // Open the main table
-            echo '<tr>';                                                            // Create the first row
-                echo '<td>';                                                        // Create the first cell
-                    echo '<form method="post">';                                    // set up the form, note single quotes are used to allow the use of double quotes inside the statement
-                    //echo '<select class="sel" name="clname">';                                   // set a name for the $_post variable
-                      //  foreach ($result as $row) {                                 // output each filename to an option
-                        //  echo "<option value=\"{$row['project_name']}\">"
-                          //  . "{$row['project_name']}</option>";
-                        //}
-                    // echo "</select>";                                                   // close the selection
-                echo '</td>';                                                       // Close the first cell
-                echo '<td align="right">Class</td>';
-                echo '<td><input name = "clname" type = "text" . 
-                           id = "clname"></td>';
-            echo '</tr>';                                                           // Close the first row
-            echo '<tr>';                                                            // Open the second row
-                echo '<td colspan="3" align="right">';                                                        // open the first cell        
-                // create a button
-                  echo '<input class="success" type="submit" value="' . $page_id 
-                        . '" name="SubmitButton"/>'; 
-                echo '</td>';                                                       // Close the first cell
-            echo '</tr>';                                                           // Close the second row
-                    echo "</form>";                                                 // close the form
-        echo '</table>';                                                            // Close the table
-        
-        // handle input data
-        // post data
-        
-        ?>
+        // set up query for project name.. -->
+        <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-4">
+                    <p>To add a new Class enter the name and submit</p>
+                    <form method="post"> 
+                        <h3>Classes</h3>
+                           <input name ="clname" type="text" id="clname">
+                           <button type="button" class="btn btn-info" value="Add Class">Add Class</button> 
+                    </form>
+              </div>
+            </div>
+        </div>
+      <?php  include 'footer.php'; ?>  
     </body>
 </html>

@@ -59,6 +59,7 @@ and open the template in the editor.
         ?>
         <!-- show current data in a table -->
        <div class="container-fluid">
+         <div style="height: 450px; max-height:450px; overflow-y: scroll">
            <div class="row">
               <div class="col-sm-4">
                 <table class="table table-bordered table-sm table-striped">
@@ -79,6 +80,7 @@ and open the template in the editor.
 
            </div>
           </div>
+         </div>
           <hr>
         </div>
 

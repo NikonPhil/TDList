@@ -56,8 +56,9 @@ and open the template in the editor.
         
         // show current data in a table ?>
         <div class="container-fluid">
+          <div style="height: 450px; max-height:450px; overflow-y: scroll">
            <div class="row">
-              <div class="col-sm-4">
+              <div class="col-sm-5">
                 <table class="table table-bordered table-sm table-striped">
                   <thead class="thead-dark">
                     <th>Project</th>
@@ -72,8 +73,9 @@ and open the template in the editor.
                     } ?>
                 </table>
               </div>
-             <div class="col-sm-8">
+             <div class="col-sm-7">
              </div>
+           </div>
           </div>
              <hr>
          </div>
@@ -86,9 +88,9 @@ and open the template in the editor.
                 <p>To add a new project enter the name and description and submit</p>
                   <form method="post">
                       <h3>Project Name</h3>
-                        <input name = "prname" type = "text">
+                        <input name="prname" type="text">
                       <h3>Project Description</h3>
-                        <input name="prdesc" type = "text">
+                        <input name="prdesc" type="text">
                         <button type="button" class="btn btn-info" value="Add Project">Add Project</button> 
                   </form>
               </div>

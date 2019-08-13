@@ -10,14 +10,14 @@
    
 <!-- New NavBar using Bootstrap 4 -->
  <div class="container-fluid">
-    <h1>Simple To-Do Tracker</h1>
-    <hr>
+   
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-   <!-- Navbar text-->
+   <!-- Navbar text -->
   <span class="navbar-text">
-      <b>TDList&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</b>
+      <span style="color: sandybrown"><b>Simple To-Do Tracker</b></span>
   </span>
-    <ul class="navbar-nav">
+   <div class="p-2 mr-auto navbar-dark"></div>
+    <ul class="navbar-nav"> 
     <li class="nav-item">
       <a class="nav-link" href="./index.php">Tasks</a>
     </li>
