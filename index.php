@@ -6,14 +6,21 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        
         <title>To Do List Main Page</title>
         <link rel="stylesheet" type="text/css" href="TDList.css">
     </head>
     <body>
-        <?php include 'Header.php';
-        // put your code here
-        echo '<h1>Task Management</h1>'; 
+        <?php include 'header1.php'; ?>
+        <div class="container-fluid">
+          <h1>Task Management</h1>
+        </div>
+        <?php
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
         $page_id = "Task Management";  
         if(! $conn) {
@@ -92,31 +99,7 @@ and open the template in the editor.
 
          }
          }
-         // Test multiple selections
-        //echo "<br>" . 'setting up sql' . "<br>";
-        $sql1 = "SELECT idtd_projects, project_name FROM td_projects"; 
-        //echo $sql1 . "<br>";
-        $res1 = mysqli_query($conn, $sql1);
-        
-        $sql2 = "SELECT idtd_filename, filename FROM td_filename";
-        //echo $sql2 . "<br>";
-        $res2 = mysqli_query($conn, $sql2);
-        
-        $sql3 = "SELECT idtd_status, td_status FROM td_status";
-        //echo $sql3 . "<br>";
-        $res3 = mysqli_query($conn, $sql3);
-        
-        $sql4 = "SELECT idtd_class, class FROM td_class";
-        //echo $sql4 . "<br>";
-        $res4 = mysqli_query($conn, $sql4);
-        
-        $sql5 = "SELECT idtd_priority, priority FROM td_priority";
-        //echo $sql5 . "<br>";
-        $res5 = mysqli_query($conn, $sql5);
-        
-        $sql6 = "SELECT idtd_category, category FROM td_category";
-        //echo $sql6 . "<br>";
-        $res6 = mysqli_query($conn, $sql6);
+      
         
         $sql7 = "SELECT td_tasks.id_tasks, td_tasks.task, td_tasks.details, 
             td_tasks.entry_date, td_projects.project_name, 
@@ -133,120 +116,192 @@ and open the template in the editor.
         
         $result = mysqli_query($conn, $sql7);
         
-        // show current data in a table
-        echo '<table class="t01">';
-          echo '<tr>';
-              echo '<th>Task No.</th>';
-              echo '<th>Task</th>';
-              echo '<th>Project</th>';
-              echo '<th>Filename</th>';
-              echo '<th>Priority</th>';
-              echo '<th>Category</th>';
-              echo '<th>Class</th>';
-              echo '<th>Status</th>';
-              echo '<th>Details</th>';
-              echo '<th>Entry Date</th>';
-          echo '</tr>';
-           while ($row = mysqli_fetch_array($result)) {
-            echo '<tr>';
-              echo '<td>' . $row['id_tasks'] . '</td>';
-              echo '<td>' . $row['task'] . '</td>';
-              echo '<td>' . $row['project_name'] . '</td>';
-              echo '<td>' . $row['filename'] . '</td>';
-              echo '<td>' . $row['priority'] . '</td>';
-              echo '<td>' . $row['Category'] . '</td>';
-              echo '<td>' . $row['class'] . '</td>';
-              echo '<td>' . $row['td_status'] . '</td>';
-              echo '<td>' . $row['details'] . '</td>';
-              echo '<td>' . $row['entry_date'] . '</td>';
-            echo '</tr>';
-          } 
-        echo '</table>';
-        echo '<hr>';
-        
-        // display form to add new data, (select a project)
-        // set up query for project name..
-        echo '<p>To add a new filename select a project, enter the filename '
-                . 'and submit</p>';  
-        echo '<table class="entry">';                                               // Open the main table
-            echo '<tr>';                                                            // Create the first row
-                echo '<td>';                                                        // Create the first cell
-                    echo '<form method="post">';                                    // set up the form, note single quotes are used to allow the use of double quotes inside the statement
-                    echo '<select class="sel" name="pname">';                                   // set a name for the $_post variable
-                        foreach ($res1 as $row) {                                 // output each filename to an option
+        // show current data in a table ?>
+        <div class="container-fluid" >
+            <div style="height: 400px; max-height:400px; overflow-y: scroll">
+            <!-- <div class="overflow-auto"> -->
+             <div class="row">
+              <div class="col-sm-12">
+                  
+                <table class="table table-bordered table-sm table-striped">
+                  <thead class="thead-dark">
+                    <th>Task No.</th>
+                    <th>Task</th>
+                    <th>Project</th>
+                    <th>Filename</th>
+                    <th>Priority</th>
+                    <th>Category</th>
+                    <th>Class</th>
+                    <th>Status</th>
+                    <th>Details</th>
+                    <th>Entry Date</th>
+                  </thead>
+                    <?php
+                    while ($row = mysqli_fetch_array($result)) {
+                      echo '<tr>';
+                        echo '<td>' . $row['id_tasks'] . '</td>';
+                        echo '<td>' . $row['task'] . '</td>';
+                        echo '<td>' . $row['project_name'] . '</td>';
+                        echo '<td>' . $row['filename'] . '</td>';
+                        echo '<td>' . $row['priority'] . '</td>';
+                        echo '<td>' . $row['Category'] . '</td>';
+                        echo '<td>' . $row['class'] . '</td>';
+                        echo '<td>' . $row['td_status'] . '</td>';
+                        echo '<td>' . $row['details'] . '</td>';
+                        echo '<td>' . $row['entry_date'] . '</td>';
+                      echo '</tr>';
+                    } 
+                    ?>
+                </table>
+              </div>  
+             </div>
+            <!-- </div> -->
+            </div>
+             <hr>
+         </div>
+        <div class="container-fluid">
+            <p>To add a new Task, enter the details below</p>
+            <form method="post">
+            <div class="row">
+                <div class="col-sm-1">
+                    Project
+                </div>
+                <div class="col-sm-1">
+                    <?php
+                    $sql1 = "SELECT idtd_projects, project_name FROM td_projects"; 
+                    //echo $sql1 . "<br>";
+                    $res1 = mysqli_query($conn, $sql1);
+                    echo '<select class="sel" name="pname">';        
+                        foreach ($res1 as $row) {                             
                           echo "<option value=\"{$row['idtd_projects']}\">"
                             . "{$row['project_name']}</option>";
                         }
-                    echo "</select>";                                                   // close the selection
-                echo '</td>';                                                       // Close the first cell
-                echo '<td>';
-                echo '<select class="sel" name="fname">';
+                    echo "</select>";
+                    ?>
+                </div>
+                <div class="col-sm-1">
+                    File
+                </div>
+                <div class="col-sm-3">
+                    <?php
+                    $sql2 = "SELECT idtd_filename, filename FROM td_filename";
+                    //echo $sql2 . "<br>";
+                    $res2 = mysqli_query($conn, $sql2);
+                    echo '<select class="sel" name="fname">';
                     foreach ($res2 as $row2) {
                         echo "<option value=\"{$row2['idtd_filename']}\">"
                             . "{$row2['filename']}</option>";
                     }
-                echo "</select>";
-                echo '</td>';
-                echo '<td>';
-                echo '<select class="sel" name="sname">';
+                    echo "</select>";
+                    ?>
+                </div>
+                <div class="col-sm-1">
+                    Status
+                </div>
+                <div class="col-sm-1">
+                    <?php
+                    $sql3 = "SELECT idtd_status, td_status FROM td_status";
+                    //echo $sql3 . "<br>";
+                    $res3 = mysqli_query($conn, $sql3);
+                    echo '<select class="sel" name="sname">';
                     foreach ($res3 as $row3) {
                         echo "<option value=\"{$row3['idtd_status']}\">"
                             . "{$row3['td_status']}</option>";
                     }
                 echo "</select>";
-                echo '</td>';
-                echo '<td>';
-                echo '<select class="sel" name="clname">';
+                ?>
+                </div>
+                <div class="col-sm-1">
+                    Class
+                </div>
+                <div class="col-sm-1">
+                    <?php
+                     $sql4 = "SELECT idtd_class, class FROM td_class";
+                    //echo $sql4 . "<br>";
+                    $res4 = mysqli_query($conn, $sql4);
+                    echo '<select class="sel" name="clname">';
                     foreach ($res4 as $row4) {
                         echo "<option value=\"{$row4['idtd_class']}\">"
                             . "{$row4['class']}</option>";
                     }
                 echo "</select>";
-                echo '</td>';
-                echo '<td>';
-                echo '<select class="sel" name="prname">';
+                ?>
+                </div>
+                <div class="col-sm-1">
+                    Priority
+                </div>
+                <div class="col-sm-1">
+                    <?php
+                    $sql5 = "SELECT idtd_priority, priority FROM td_priority";
+                    //echo $sql5 . "<br>";
+                    $res5 = mysqli_query($conn, $sql5);
+                    echo '<select class="sel" name="prname">';
                     foreach ($res5 as $row5) {
                         echo "<option value=\"{$row5['idtd_priority']}\">"
                             . "{$row5['priority']}</option>";
                     }
-                echo "</select>";
-                echo '</td>';
-                echo '<td>';
-                echo '<select class="sel" name="caname">';
+                    echo "</select>";
+                    ?>
+                </div>
+                
+            </div>
+        </div>
+        <br>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-1">
+                    Category
+                </div>
+                <div class="col-sm-1">
+                    <?php
+                    $sql6 = "SELECT idtd_category, category FROM td_category";
+                    //echo $sql6 . "<br>";
+                    $res6 = mysqli_query($conn, $sql6);
+                    echo '<select class="sel" name="caname">';
                     foreach ($res6 as $row6) {
                         echo "<option value=\"{$row6['idtd_category']}\">"
                             . "{$row6['category']}</option>";
                     }
-                echo "</select>";
-                echo '</td>';
-                echo '</tr>';
-                echo '<tr>';
-                echo '<td align="right">Task</td>';
-                echo '<td><input name = "task" type = "text" . 
-                           id = "task"></td>';
-                echo '<td align="right">Entry Date</td>';
-                echo '<td><input name = "edate" type = "text" . 
-                           id = "edatee"></td>';
-                echo '<td align="right">Completion Date</td>';
-                echo '<td><input name = "cdate" type = "text" . 
-                           id = "cdate"></td>';
-                echo '<td align="right">Details</td>';
-                echo '<td><input name = "details" type = "text" . 
-                           id = "details"></td>';
-                echo '</tr>';                                                           // Close the first row
-            echo '<tr>';                                                            // Open the second row
-                echo '<td colspan="2" align="right">';                                                        // open the first cell        
-                // create a button
-                  echo '<input class="success" type="submit" value="Enter New'
-                . ' Task" name="button"/>';
-                echo '</td>';
-                echo '<td>';
-                echo '<input class="success" type="submit" Value="Update '
-                  . 'Existing Task" name="button"';
-                echo '</td>';                                                       // Close the first cell
-            echo '</tr>';                                                           // Close the second row
-                    echo "</form>";                                                 // close the form
-        echo '</table>';                                                            // Close the table
+                    echo "</select>";
+                    ?>
+                </div>
+                <div class="col-sm-1">
+                    Task
+                </div>
+                <div class="col-sm-4">
+                  <input name = "task" type = "text" id = "task">
+                </div>
+                <!-- Entry date added automatically
+                <div class="col-sm-3">
+                 <input name = "edate" type = "text" id = "edatee">
+                </div>
+                <div class="col-sm-3">
+                  <input name = "cdate" type = "text" id = "cdate">
+                </div> -->
+                <div class="col-sm-1">
+                    Details
+                </div>
+                <div class="col-sm-4">
+                   <input name = "details" type = "text" id = "details">
+            </div>
+        </div>
+            <br>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-3">
+                    <button class="btn btn-info" type="button" value="Enter New Task">Enter New Task</button>
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn btn-info" type="button" value="Update Existing Task">Update Task</button>
+                </div>
+                <div class="col-sm-6">
+                
+                </div>
+                </form>
+            </div>
+        </div>
+        <?php 
+                                                                  
         /* Joining tables is a fundamental principle of relational databases. 
          * In your case, A and B are related with the id column, which means 
          * that you can use a syntax similar to this one:
@@ -259,6 +314,7 @@ and open the template in the editor.
          * matching ones from A, use RIGHT JOIN. Finally, if you need 
          * everything from both tables, matching or not, you can use FULL JOIN.
          */
+        include 'footer.php';
         ?>
         </body>
 </html>
