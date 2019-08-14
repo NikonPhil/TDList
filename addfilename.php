@@ -6,12 +6,16 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <title>Add a new filename to the database</title>
-        <link rel="stylesheet" type="text/css" href="TDList.css">
+        <!-- <link rel="stylesheet" type="text/css" href="TDList.css"> -->
     </head>
     <body>
-        <?php include 'Header.php';
+        <?php include 'header1.php';
         // put your code here
         echo '<h1>List of existing filenames</h1>';                                // edit this line
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
@@ -37,68 +41,76 @@ and open the template in the editor.
                die('Could not enter data: ' . mysqli_error($conn));
              }           
             }
+        $sql = "SELECT td_filename.filename, "
+                                . "td_projects.idtd_projects, "
+                                . "td_projects.project_name FROM td_filename "
+                                . "RIGHT JOIN td_projects ON "
+                                . "td_filename.idtd_project = "
+                                . "td_projects.idtd_projects";                                 // Change sql table / field references
         
-        
-        // setup query to select current data
-        $sql = "SELECT td_filename.filename, td_projects.idtd_projects, " .
-            "td_projects.project_name FROM td_filename " .
-            "RIGHT JOIN td_projects ON "
-                . "td_filename.idtd_project = td_projects.idtd_projects";                                 // Change sql table / field references
-              
         $result = mysqli_query($conn, $sql);
-        
-        // show current data in a table
-        echo '<table class="t01">';
-          echo '<tr>';
-              echo '<th>Project</th>';                                             // Change table header name
-              echo '<th>Filename</th>';
-          echo '</tr>';
+        $row = mysqli_fetch_array($result);
+        // var_dump($row);
+        // echo '<br>';
+        // $new = array_column($row, 'project_name');
+        // var_dump($new);
+        // Die();
+        // show current data in a table ?>
+        <!-- Show current data. -->
+        <div class="container-fluid">
+          <div style="height: 450px; max-height:450px; overflow-y: scroll">
+           <div class="row">
+              <div class="col-sm-4">
+                <table class="table table-bordered table-sm table-striped">
+                  <thead class="thead-dark">
+                    <th>Project</th>
+                    <th>Filename</th>                                                
+                  </thead>
+            <?php
+            
           while ($row = mysqli_fetch_array($result)) {
             echo '<tr>';
-              echo '<td>' . $row['project_name'] . '</td>';                             // Change variable name
+              echo '<td>' . $row['project_name'] . '</td>';
               echo '<td>' . $row['filename'] . '</td>';
             echo '</tr>';
           }
-        echo '</table>';
-        echo '<hr>';
+          ?>
+                </table>
+              </div>
+           </div>
+          </div>
+            <hr>
+        </div>
         
-        // display form to add new data, (select a project)
-        // set up query for category name..
-        echo '<p>To add a new filename select the project, enter the name '
-                . 'and submit</p>';                                                 // Change the title
-        echo '<table class="entry">';                                               // Open the main table
-            echo '<tr>';                                                            // Create the first row
-                echo '<form method="post">';                                    // set up the form, note single quotes are used to allow the use of double quotes inside the statement
-                // echo '<th></th>';
-                echo '<th align="center">Project Name</th>';
-                echo '<th align="center">Filename</th>';
-            echo '</tr>';
-            echo '<tr>';
-                // echo '<td align="right"></td>';                              // Change the title
-                echo '<td align="center">';
-                    echo '<select class="sel" name = "pid">';              // Change the reference names
+        
+        <div class="container-fluid">
+            <div class="row">
+              <div class="col-sm-4">
+                <p>To add a new Filename select the project, enter the name and submit</p>      
+                      <form method="post">
+                       <h3>Project</h3>
+                       <?php
+                        $sql1 = "SELECT idtd_projects, project_name FROM td_projects";
+                        $result = mysqli_query($conn, $sql1);
+                        // $row = mysqli_fetch_array($result);
+                        echo '<select class="sel" name="sname">';
                         foreach ($result as $row) {
                         echo "<option value=\"{$row['idtd_projects']}\">"
                             . "{$row['project_name']}</option>";
-                    }
-                    echo '</select>';
-                echo '</td>';
-                    echo '<td align="center"><input name="fname" type = "text">';
-                echo '</td>';
-            echo '</tr>';                                                           // Close the first row
-            echo '<tr>';                                                            // Open the second row
-                echo '<td colspan="3" align="right">';                              // open the first cell        
-                // create a button
-                  echo '<input class="success" type="submit" value="Add ' . $page_id 
-                        . '" name="SubmitButton"/>'; 
-                echo '</td>';                                                       // Close the first cell
-            echo '</tr>';                                                           // Close the second row
-                    echo "</form>";                                                 // close the form
-        echo '</table>';                                                            // Close the table
-        
-        // handle input data
-        // post data
-        
-        ?>
+                        }
+                        echo "</select>";
+                        ?>
+                       <h3>Filename</h3> 
+                        <input name = "fname" type = "text" id = "fname">   
+                       <button type="button" class="btn btn-info" value="Add Category">Add Filename</button>
+                      </form>
+              </div>
+              <div class="col-sm-8">
+
+              </div>
+            </div>
+        </div>
+        <?php include 'footer.php'; ?>
+       
     </body>
 </html>
