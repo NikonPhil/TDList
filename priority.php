@@ -88,7 +88,7 @@ and open the template in the editor.
                       <form method="post">
                        <h3>Priority</h3>
                        <input name = "pname" type = "text" id = "pname">   
-                       <button type="button" class="btn btn-info" value="Add Status">Add Priority</button>
+                       <input type="submit" class="btn btn-info" value="Add Priority">
                       </form>
               </div>
               <div class="col-sm-8">

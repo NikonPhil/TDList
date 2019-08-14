@@ -90,7 +90,7 @@ and open the template in the editor.
                     <form method="post"> 
                         <h3>Classes</h3>
                            <input name ="clname" type="text" id="clname">
-                           <button type="button" class="btn btn-info" value="Add Class">Add Class</button> 
+                           <input type="submit" class="btn btn-info" value="Add Class">
                     </form>
               </div>
             </div>

@@ -92,10 +92,10 @@ and open the template in the editor.
               <div class="col-sm-4">
                     <p>To add a new status enter the name and submit</p>                                                 
                         <form method="post"> 
-                            <h3>Status<h3>
+                            <h3>Status</h3>
                                 <input name ="sname" type="text" id="sname">
                            <!-- create a button -->
-                           <button type="button" class="btn btn-info" value="Add Status">Add Status</button> 
+                           <input type="submit" class="btn btn-info" value="Add Status"> 
                         </form>       
               </div>
               <div class="col-sm-8">

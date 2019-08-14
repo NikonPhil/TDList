@@ -14,7 +14,7 @@ and open the template in the editor.
     <div class="container-fluid fixed-bottom">
               <footer>
                   <hr>
-                  <h4 style="text-align: center">By Phil Burness using Netbeans, Mysql, Apache, PHP and Github</h4>
+                  <h6 style="text-align: center">By Phil Burness using Netbeans, Mysql, Apache, PHP and Github</h6>
               </footer>
     </div>
     </body>

@@ -93,7 +93,7 @@ and open the template in the editor.
                         $sql1 = "SELECT idtd_projects, project_name FROM td_projects";
                         $result = mysqli_query($conn, $sql1);
                         // $row = mysqli_fetch_array($result);
-                        echo '<select class="sel" name="sname">';
+                        echo '<select name="pid">';
                         foreach ($result as $row) {
                         echo "<option value=\"{$row['idtd_projects']}\">"
                             . "{$row['project_name']}</option>";
@@ -102,7 +102,7 @@ and open the template in the editor.
                         ?>
                        <h3>Filename</h3> 
                         <input name = "fname" type = "text" id = "fname">   
-                       <button type="button" class="btn btn-info" value="Add Category">Add Filename</button>
+                       <input type="submit" class="btn btn-info" value="Add Filename">
                       </form>
               </div>
               <div class="col-sm-8">

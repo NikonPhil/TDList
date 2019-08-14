@@ -91,7 +91,7 @@ and open the template in the editor.
                         <input name="prname" type="text">
                       <h3>Project Description</h3>
                         <input name="prdesc" type="text">
-                        <button type="button" class="btn btn-info" value="Add Project">Add Project</button> 
+                        <input type="submit" class="btn btn-info" value="Add Project"> 
                   </form>
               </div>
             </div>

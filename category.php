@@ -85,7 +85,7 @@ and open the template in the editor.
                       <form method="post">
                        <h3>Category</h3>
                         <input name = "cname" type = "text" id = "cname">   
-                       <button type="button" class="btn btn-info" value="Add Category">Add Category</button>
+                       <input type="submit" class="btn btn-info" value="Add Category">
                       </form>
               </div>
               <div class="col-sm-8">

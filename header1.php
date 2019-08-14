@@ -5,6 +5,14 @@
         <meta charset="UTF-8">
         <title>Navbar header</title>
         <link rel="stylesheet" type="text/css" href="TDList.css">
+        <style>
+        hr {
+            color: darkslateblue;
+            background-color: darkslateblue;
+            height: 3px;
+            border: none;
+            }
+        </style>
     </head>
     <body>
    
@@ -14,7 +22,7 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
    <!-- Navbar text -->
   <span class="navbar-text">
-      <span style="color: sandybrown"><b>Simple To-Do Tracker</b></span>
+      <span style="color: sandybrown"><h4><b>Simple To-Do Tracker</b></h4></span>
   </span>
    <div class="p-2 mr-auto navbar-dark"></div>
     <ul class="navbar-nav"> 
