@@ -21,82 +21,81 @@ and open the template in the editor.
           <h1>Task Management</h1>
         </div>
         <?php
+        $page_id = "Task Management"; 
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
-        $page_id = "Task Management";  
         if(! $conn) {
-                die('Could not connect : ' . mysqli_error());
+            die('Could not connect : ' . mysqli_error());
         }   
-        
-        
+                
         // setup POST handling to add a new filename
          if(isset($_POST['pname'])) {
-            // print_r($_POST); // Added to test the _POST variable
-            // echo '<br>';
-            if ($_POST['button'] === "Update Existing Task") {
-                echo 'Updating records<br>';
+             //echo 'In the _Post["pname"] clause<br>';
+             //print_r($_POST); // Added to test the _POST variable
+             //echo '<br>';
+            if ($_POST['mod'] == "Mod") {
+                // echo 'Updating records<br>';
                 $filenameID = $_POST['fname'];
-            $projectID = $_POST['pname'];
-            $statusID = $_POST['sname'];
-            $classID = $_POST['clname'];
-            $priorityID = $_POST['prname'];
-            $categoryID = $_POST['caname'];
-            $Entry_Date = $_POST['edate'];
-            $Comp_Date = $_POST['cdate'];
-            $details = $_POST['details'];
-            $task = $_POST['task'];
+                $projectID = $_POST['pname'];
+                $statusID = $_POST['sname'];
+                $classID = $_POST['clname'];
+                $priorityID = $_POST['prname'];
+                $categoryID = $_POST['caname'];
+                // $Entry_Date = $_POST['edate'];
+                // $Comp_Date = $_POST['cdate'];
+                $details = $_POST['details'];
+                $task = $_POST['task'];
             
-            if ($statusID === "5") {
-                $Comp_Date = "(CURRENT_TIMESTAMP)";
-            } else {
-                $Comp_Date = "NULL";
-            }
-            
-            $sql = "UPDATE td_tasks SET "
-                    . "complete_date = $Comp_Date, idtd_filename = $filenameID, "
+                if ($statusID === "5") {
+                    $Comp_Date = date('Y-m-d H:i:s');
+                    $sql = "UPDATE td_tasks SET "
+                    . "complete_date = '$Comp_Date', idtd_filename = $filenameID, "
                     . "idtd_category = $categoryID, idtd_priority = $priorityID, "
                     . "idtd_class = $classID, idtd_status = $statusID, "
-                    . "idtd_projects = $projectID "
+                    . "idtd_projects = $projectID, details = '$details' "
                     . "WHERE td_tasks.task = \"$task\";";
-                    
-            
-            if ($conn->multi_query($sql) === TRUE) {
-                echo "";
                 } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
+                // $Comp_Date = "NULL";
+                $sql = "UPDATE td_tasks SET "
+                    . "complete_date = NULL, idtd_filename = $filenameID, "
+                    . "idtd_category = $categoryID, idtd_priority = $priorityID, "
+                    . "idtd_class = $classID, idtd_status = $statusID, "
+                    . "idtd_projects = $projectID, details = '$details' "
+                    . "WHERE td_tasks.task = \"$task\";";
+                }
+            
+            if ($result = mysqli_query($conn, $sql)) {
+                echo "Worked";
+                } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
             }
-            } elseif ($_POST['button'] === "Enter New Task") {
-            
-            $filenameID = $_POST['fname'];
-            $projectID = $_POST['pname'];
-            $statusID = $_POST['sname'];
-            $classID = $_POST['clname'];
-            $priorityID = $_POST['prname'];
-            $categoryID = $_POST['caname'];
-            $Entry_Date = $_POST['edate'];
-            $Comp_Date = $_POST['cdate'];
-            $details = addslashes($_POST['details']);
-            $task = $_POST['task'];
-            
-            if ($statusID === "5") {
-                $Comp_Date = "(CURRENT_TIMESTAMP)";
-            } else {
-                $Comp_Date = "NULL";
             }
-            
-            $sql = "INSERT INTO td_tasks (id_tasks, task, details, entry_date,"
-                    . " complete_date, idtd_filename, idtd_category, "
+            if ($_POST['add'] == "Add") {
+                // echo 'In the add clause <br>';
+                $filenameID = $_POST['fname'];
+                $projectID = $_POST['pname'];
+                $statusID = $_POST['sname'];
+                $classID = $_POST['clname'];
+                $priorityID = $_POST['prname'];
+                $categoryID = $_POST['caname'];
+                //$Entry_Date = $_POST['edate'];
+                //$Comp_Date = $_POST['cdate'];
+                $details = addslashes($_POST['details']);
+                $task = $_POST['task'];
+                $date = date('Y-m-d H:i:s');
+                $sql = "INSERT INTO td_tasks (id_tasks, task, details, "
+                    . "entry_date, idtd_filename, idtd_category, "
                     . "idtd_priority, idtd_class, idtd_status, idtd_projects) "
-                    . "VALUES (NULL, '$task','$details', (CURRENT_TIMESTAMP), "
-                    . "$Comp_Date, $filenameID, $categoryID, $priorityID, "
-                    . "$classID, $statusID, $projectID) ";
+                    . "VALUES (NULL, '$task', '$details', '$date', "
+                    . "$filenameID, $categoryID, $priorityID, "
+                    . "$classID, $statusID, $projectID)";
 
-            
-            if ($conn->multi_query($sql) === TRUE) {
-                echo "";
+            echo $sql . '<br>';
+            if ($result = mysqli_query($conn, $sql)) {
+                echo "Worked";
                 } else {
-                echo "Error: " . $sql . "<br>" . $conn->error;
+               echo "Error: " . $sql . "<br>" . mysqli_error($conn); 
             }
-
+            // echo 'Leaving the Add Clause<br>';
          }
          }
       
@@ -114,7 +113,7 @@ and open the template in the editor.
     JOIN td_priority ON td_tasks.idtd_priority = td_priority.idtd_priority 
     ORDER BY td_projects.project_name";
         
-        $result = mysqli_query($conn, $sql7);
+        $res7 = mysqli_query($conn, $sql7);
         
         // show current data in a table ?>
         <div class="container-fluid" >
@@ -137,7 +136,7 @@ and open the template in the editor.
                     <th>Entry Date</th>
                   </thead>
                     <?php
-                    while ($row = mysqli_fetch_array($result)) {
+                    while ($row = mysqli_fetch_array($res7)) {
                       echo '<tr>';
                         echo '<td>' . $row['id_tasks'] . '</td>';
                         echo '<td>' . $row['task'] . '</td>';
@@ -159,9 +158,10 @@ and open the template in the editor.
             </div>
              <hr>
          </div>
+        <form method="post">
         <div class="container-fluid">
             <p>To add a new Task, enter the details below</p>
-            <form method="post">
+            
             <div class="row">
                 <div class="col-sm-1">
                     Project
@@ -283,23 +283,24 @@ and open the template in the editor.
                 </div>
                 <div class="col-sm-4">
                    <input name = "details" type = "text" id = "details">
-            </div>
+                </div>
         </div>
             <br>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-3">
-                    <button class="btn btn-info" type="button" value="Enter New Task">Enter New Task</button>
+                    <button class="btn btn-info" name="add" value="Add" type="submit">Add New Task</button> 
                 </div>
                 <div class="col-sm-3">
-                    <button class="btn btn-info" type="button" value="Update Existing Task">Update Task</button>
+                    <button class="btn btn-info" name="mod" value="Mod" type="submit">Update Existing Task</button>
                 </div>
                 <div class="col-sm-6">
                 
                 </div>
-                </form>
             </div>
         </div>
+        </div>
+        </form>
         <?php 
                                                                   
         /* Joining tables is a fundamental principle of relational databases. 
