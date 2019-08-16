@@ -25,10 +25,20 @@
       <span style="color: sandybrown"><h4><b>Simple To-Do Tracker</b></h4></span>
   </span>
    <div class="p-2 mr-auto navbar-dark"></div>
-    <ul class="navbar-nav"> 
-    <li class="nav-item">
-      <a class="nav-link" href="./index.php">Tasks</a>
-    </li>
+    <ul class="navbar-nav">
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                Tasks Menu
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="./index.php">
+                    Add Task
+                </a>
+                <a class="dropdown-item" href="./update.php">
+                    Update Task
+                </a>
+            </div>
+        </li>
     <li class="nav-item">
       <a class="nav-link" href="priority.php">Priorities</a>
     </li>

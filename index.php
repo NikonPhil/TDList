@@ -13,7 +13,7 @@ and open the template in the editor.
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         
         <title>To Do List Main Page</title>
-        <link rel="stylesheet" type="text/css" href="TDList.css">
+        <!-- <link rel="stylesheet" type="text/css" href="TDList.css"> -->
     </head>
     <body>
         <?php include 'header1.php'; ?>
