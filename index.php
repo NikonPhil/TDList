@@ -6,17 +6,13 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <?php include 'header1.php'; ?>
         
         <title>To Do List Main Page</title>
-        <!-- <link rel="stylesheet" type="text/css" href="TDList.css"> -->
+        
     </head>
     <body>
-        <?php include 'header1.php'; ?>
+        
         <div class="container-fluid">
           <h1>Task Management</h1>
         </div>
@@ -98,9 +94,9 @@ and open the template in the editor.
             // echo 'Leaving the Add Clause<br>';
          }
          }
-      
+        $sql7 = "SELECT * FROM task_join";
         
-        $sql7 = "SELECT td_tasks.id_tasks, td_tasks.task, td_tasks.details, 
+        /*$sql7 = "SELECT td_tasks.id_tasks, td_tasks.task, td_tasks.details, 
             td_tasks.entry_date, td_projects.project_name, 
             td_filename.filename, td_class.class, td_status.td_status, 
             td_category.Category, td_priority.priority 
@@ -111,7 +107,7 @@ and open the template in the editor.
     RIGHT JOIN td_status ON td_tasks.idtd_status = td_status.idtd_status
     RIGHT JOIN td_category ON td_tasks.idtd_category = td_category.idtd_category
     JOIN td_priority ON td_tasks.idtd_priority = td_priority.idtd_priority 
-    ORDER BY td_projects.project_name";
+    ORDER BY td_projects.project_name"; */
         
         $res7 = mysqli_query($conn, $sql7);
         
@@ -291,9 +287,7 @@ and open the template in the editor.
                 <div class="col-sm-3">
                     <button class="btn btn-info" name="add" value="Add" type="submit">Add New Task</button> 
                 </div>
-                <div class="col-sm-3">
-                    <button class="btn btn-info" name="mod" value="Mod" type="submit">Update Existing Task</button>
-                </div>
+                
                 <div class="col-sm-6">
                 
                 </div>
