@@ -1,57 +1,47 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html>
   <head>
+      <!-- CSS files added via header1.php -->
       <?php include 'header1.php'; ?>
-        
-
+      
     <title>Status Page</title>
-    <!-- <link rel="stylesheet" type="text/css" href="TDList.css"> -->
-        
+            
   </head>
   <body>
       
-        <!-- put your code here -->
-        <div class="container-fluid">
-        <h1>List of existing Statuses</h1> 
-        </div>
+    <div class="container-fluid">
+      <h1>List of existing Statuses</h1> 
+    </div>
+    <!-- Connect to database or exit -->    
         <?php
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
-        $page_id = "Status";                                                      // edit this line
+        $page_id = "Status";
         if(! $conn) {
                 die('Could not connect : ' . mysqli_error());
-        } else {
-            echo '';
         }
+        
         // setup POST handling to add a new priority
-        if(isset($_POST['sname'])) {                                                // edit this line and change variable name
-            // print_r($_POST); // Added to test the _POST variable                    // to test variable handling, comment out later
-            // echo '<br>';                                                            // as above
+        if(isset($_POST['sname'])) {
             
-            $status = $_POST['sname'];                                            // edit to change variable names
+            $status = $_POST['sname'];
             $sql = "INSERT INTO td_status (idtd_status, td_status)" . 
-                    "VALUES (NULL, '$status')";                                   // edit to change variable names
+                    "VALUES (NULL, '$status')";
             $result = mysqli_query($conn, $sql);
 
             if(! $result ) {
-               die('Could not enter data: ' . mysqli_error($conn));
+               die('Could not insert data: ' . mysqli_error($conn));
             }           
-            
-            //echo $sql . "<br>"; // added to check construct of the sql statement
-            //echo '<p>Variable Priority = ' . $priority . '</p><br>';
-        } else { // Or display the current table with an option to add a priority
-            echo '<P></p>';
-        }
+        } // End of POST processing
         
         
         // setup query to select current data
-        $sql = "SELECT td_status FROM td_status";                                  // Change sql table / field references
+        $sql = "SELECT td_status FROM td_status";
                 
         $result = mysqli_query($conn, $sql);
+        if(! $result ) {
+               die('Could not select data: ' . mysqli_error($conn));
+            }
         ?>
         <!-- show current data in a table -->
        <div class="container-fluid">
@@ -65,24 +55,21 @@ and open the template in the editor.
                     <?php
                         while ($row = mysqli_fetch_array($result)) {
                           echo '<tr>';
-                            echo '<td>' . $row['td_status'] . '</td>';                             // Change variable name
-                            // echo '<td>' . $row['filename'] . '</td>';
+                            echo '<td>' . $row['td_status'] . '</td>';
                           echo '</tr>';
                         }
                     ?>
                 </table>
               </div>
            <div class="col-sm-8">
-
+               <!-- Dummy cell to maintain layout -->
            </div>
           </div>
          </div>
           <hr>
         </div>
 
-
-        <!-- display form to add new data, (select a project)
-        // set up query for status name.. -->
+        <!-- display form to add new data, (select a status) -->       
         <div class="container-fluid">
             <div class="row">
               <div class="col-sm-4">
@@ -90,14 +77,16 @@ and open the template in the editor.
                         <form method="post"> 
                             <h3>Status</h3>
                                 <input name ="sname" type="text" id="sname">
-                           <!-- create a button -->
-                           <input type="submit" class="btn btn-info" value="Add Status"> 
+                           <input type="submit" class="btn btn-info" 
+                                  value="Add Status"> 
                         </form>       
               </div>
               <div class="col-sm-8">
+                 <!-- Dummy cell to maintain layout --> 
               </div>
             </div>
         </div>
+        <!-- Setup footer display -->
         <?php  include 'footer.php'; ?>
     </body>
 </html>

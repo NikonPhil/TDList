@@ -1,56 +1,48 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html>
     <head>
+        <!-- CSS files included in header1.php -->
         <?php include 'header1.php';?>
         <title>Category Management</title>
-        <!-- <link rel="stylesheet" type="text/css" href="TDList.css"> -->
+        
     </head>
     <body>
         
         <div class="container-fluid">
-          <h1>List of existing Projects</h1> 
+          <h1>List of existing Categories</h1> 
         </div>
+        <!-- setup database connection, exit on failure
         <?php
         
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
-        $page_id = "Category";                                                      // edit this line
+        $page_id = "Category";
         if(! $conn) {
                 die('Could not connect : ' . mysqli_error());
-        } else {
-            echo '';
         }
-        // setup POST handling to add a new priority
-        if(isset($_POST['cname'])) {                                                // edit this line and change variable name
-            // print_r($_POST); // Added to test the _POST variable                    // to test variable handling, comment out later
-            // echo '<br>';                                                            // as above
+        
+        // setup POST handling to add a new priority, called from within
+        if(isset($_POST['cname'])) {                                    
             
-            $category = $_POST['cname'];                                            // edit to change variable names
+            $category = $_POST['cname'];                                            
             $sql = "INSERT INTO td_category (idtd_category, category)" . 
-                    "VALUES (NULL, '$category')";                                   // edit to change variable names
+                    "VALUES (NULL, '$category')";
             $result = mysqli_query($conn, $sql);
 
             if(! $result ) {
-               die('Could not enter data: ' . mysqli_error($conn));
+               die('Could not insert data: ' . mysqli_error($conn));
             }           
-            
-            //echo $sql . "<br>"; // added to check construct of the sql statement
-            //echo '<p>Variable Priority = ' . $priority . '</p><br>';
-        } else { // Or display the current table with an option to add a priority
-            echo '<P></p>';
-        }
+        } // End of POST handling
         
         
         // setup query to select current data
-        $sql = "SELECT category FROM td_category";                                  // Change sql table / field references
+        $sql = "SELECT category FROM td_category";
                 
         $result = mysqli_query($conn, $sql);
-        
-        // show current data in a table ?>
+        if(! $result ) {
+               die('Could not select data: ' . mysqli_error($conn));
+            }
+        ?>
         <!-- Show current data. -->
         <div class="container-fluid">
           <div style="height: 450px; max-height:450px; overflow-y: scroll">
@@ -60,14 +52,13 @@ and open the template in the editor.
                   <thead class="thead-dark">
                     <th>Category</th>                                                
                   </thead>
-            <?php
-          while ($row = mysqli_fetch_array($result)) {
-            echo '<tr>';
-              echo '<td>' . $row['category'] . '</td>';                             // Change variable name
-              // echo '<td>' . $row['filename'] . '</td>';
-            echo '</tr>';
-          }
-          ?>
+                    <?php
+                  while ($row = mysqli_fetch_array($result)) {
+                    echo '<tr>';
+                      echo '<td>' . $row['category'] . '</td>';
+                      echo '</tr>';
+                  }
+                  ?>
                 </table>
               </div>
            </div>
@@ -81,7 +72,8 @@ and open the template in the editor.
                       <form method="post">
                        <h3>Category</h3>
                         <input name = "cname" type = "text" id = "cname">   
-                       <input type="submit" class="btn btn-info" value="Add Category">
+                       <input type="submit" class="btn btn-info" 
+                              value="Add Category">
                       </form>
               </div>
               <div class="col-sm-8">
@@ -89,6 +81,7 @@ and open the template in the editor.
               </div>
             </div>
         </div>
+        <!-- Show the footer -->
         <?php include 'footer.php';
         ?>
     </body>

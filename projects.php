@@ -1,55 +1,49 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html>
     <head>
+        <!-- CSS files added via header1.php -->
         <?php include 'header1.php'; ?>
 
         <title>Add a new project to the database</title>
-        <!-- <link rel="stylesheet" type="text/css" href="TDList.css"> -->
+
     </head>
     <body>
         <div class="container-fluid">
         <h1>List of existing Projects</h1> 
         </div>
         <?php
-        
+        // Connect to database or exit
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
-        $page_id = "Project";                                                      // edit this line
+        $page_id = "Project";
         if(! $conn) {
                 die('Could not connect : ' . mysqli_error());
         } 
         
         // setup POST handling to add a new project
-        if(isset($_POST['prname'])) {                                                // edit this line and change variable name
-            print_r($_POST); // Added to test the _POST variable                    // to test variable handling, comment out later
-            echo '<br>';                                                            // as above
+        if(isset($_POST['prname'])) {
             
-            $project = $_POST['prname'];                                            // edit to change variable names
+            $project = $_POST['prname'];
             $project_desc = $_POST['prdesc'];
             $sql = "INSERT INTO td_projects (idtd_projects, project_name, " .
                      "project_description) VALUES (NULL, '$project', " .
-                     "'$project_desc')";                                   // edit to change variable names
-            // echo $sql . "<br>";
+                     "'$project_desc')";
+
             $result = mysqli_query($conn, $sql);
             
             if(! $result ) {
-               die('Could not enter data: ' . mysqli_error($conn));
+               die('Could not insert data: ' . mysqli_error($conn));
             }           
-            
-            //echo $sql . "<br>"; // added to check construct of the sql statement
-            //echo '<p>Variable Priority = ' . $priority . '</p><br>';
-            }
+        } // End of POST processing
         
         
         // setup query to select current data
         $sql = "SELECT project_name, project_description FROM td_projects;";                                  // Change sql table / field references
-        // echo $sql . "<br>";      
+             
         $result = mysqli_query($conn, $sql);
-        
+        if(! $result ) {
+               die('Could not select data: ' . mysqli_error($conn));
+            }  
         // show current data in a table ?>
         <div class="container-fluid">
           <div style="height: 450px; max-height:450px; overflow-y: scroll">
@@ -60,24 +54,23 @@ and open the template in the editor.
                     <th>Project</th>
                     <th>Project Description</th>
                 </thead>
-                <?php
-                    while ($row = mysqli_fetch_array($result)) {
-                    echo '<tr>';
-                    echo '<td>' . $row['project_name'] . '</td>';
-                    echo '<td>' . $row['project_description'] . '</td>';
-                    echo '</tr>';
-                    } ?>
+                    <?php
+                        while ($row = mysqli_fetch_array($result)) {
+                        echo '<tr>';
+                        echo '<td>' . $row['project_name'] . '</td>';
+                        echo '<td>' . $row['project_description'] . '</td>';
+                        echo '</tr>';
+                        } ?>
                 </table>
               </div>
              <div class="col-sm-7">
              </div>
            </div>
           </div>
-             <hr>
+           <hr>
          </div>
-        <?php
-        // display form to add new data, (select a project)
-        // set up query for category name.. ?>
+        
+        <!-- display form to add new data, (select a project) -->
           <div class="container-fluid">
             <div class="row">
               <div class="col-sm-4">
@@ -92,6 +85,7 @@ and open the template in the editor.
               </div>
             </div>
           </div>
+        <!-- Set up the footer -->
         <?php  
             include 'footer.php'; 
         ?>

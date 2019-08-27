@@ -1,102 +1,84 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html>
     <head>
         <meta charset="UTF-8">
+        <!-- CSS files included via header1.php -->
         <title>Update Task Details</title>
         <?php include 'header1.php'; ?>    
-         <style>
-             .clear {
-                 background-color: transparent;
-                 color:black;
-                 border: none;
-             }
-             .clear:hover {
-                 color: red;
-             }
-         </style>
+         
     </head>
     <body>
+        <!-- Connect to database or exit -->
         <?php
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
         if(! $conn) {
             die('Could not connect : ' . mysqli_error());
         }   
-        // print_r($_POST);
+        // Set up pOST processing for task selection
         if(isset($_POST['task_s'])) {
-            //echo 'Inside Task_s <br>';
-            // print_r($_POST);
-            //echo '<br>';
+            
             $task_id = $_POST['task_s'];
-            echo $task_id . '<br>';
             $sql = "SELECT * FROM to_do_list.join_example "
                         . "WHERE task_id = $task_id "
                         . "ORDER BY priority";
-                // echo $sql . '<br>';
-                if (!$result = mysqli_query($conn, $sql)) {
-                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-                }
+            $result = mysqli_query($conn, $sql);
+            if(!$result ) {
+                echo $sql;
+                die('Could not select data: ' . mysqli_error($conn));
+            }
+            
             $sql2 = "SELECT * FROM td_comments WHERE idtd_tasks = $task_id "
                     . "ORDER BY entry_date DESC";
-            if (!$result2 = mysqli_query($conn, $sql2)) {
-                    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
-                }
-        }    
+            $result2 = mysqli_query($conn, $sql2);
+            if(!$result2 ) {
+                echo $sql2;
+                die('Could not select data: ' . mysqli_error($conn));
+            }
+        } // End of 'task_s' POST processing   
         
         if ($_POST['mod'] == "Mod") {
-            // print_r($_POST);
-            // echo 'Updating records<br>';
-            // $filenameID = $_POST['fname'];
-            // $projectID = $_POST['pname'];
+         
             $statusID = $_POST['stname'];
             $classID = $_POST['clname'];
             $priorityID = $_POST['prname'];
             $categoryID = $_POST['caname'];
-            // $Entry_Date = $_POST['edate'];
-            // $Comp_Date = $_POST['cdate'];
             $details = trim(addslashes($_POST['details']));
-            // $task = $_POST['task'];
             $task_id = $_POST['task_id'];
-            
-            echo "Inside mod code. Task_ID = " . $task_id . '<br>';
-            // die();
-
-            if ($statusID === "5") {
+        
+            if ($statusID === "5") { // Is the task closed?
                 $Comp_Date = date('Y-m-d H:i:s');
                 $sql = "UPDATE td_tasks SET "
                 . "complete_date = '$Comp_Date', "
                 . "idtd_category = $categoryID, idtd_priority = $priorityID, "
-                . "idtd_class = $classID, idtd_status = $statusID, "
+                . "idtd_class = $classID, idtd_status = $statusID "
                 . "WHERE td_tasks.id_tasks = \"$task_id\";";
+                
                 $sql3 = "INSERT INTO td_comments (comments, idtd_tasks, "
                 . "entry_date) VALUES (\"$details\", $task_id, "
                 . "now())";
-            } else {
-            // $Comp_Date = "NULL";
-            $sql = "UPDATE td_tasks SET "
-                . "complete_date = NULL, "
-                . "idtd_category = $categoryID, idtd_priority = $priorityID, "
-                . "idtd_class = $classID, idtd_status = $statusID, "
-                . "details = '$details' "
-                . "WHERE td_tasks.id_tasks = \"$task_id\";";
-            $sql3 = "INSERT INTO td_comments (comments, idtd_tasks, "
-                . "entry_date) VALUES (\"$details\", $task_id, "
-                . "now())";
+            } else { // No, leave the completion date open
+                $sql = "UPDATE td_tasks SET "
+                    . "complete_date = NULL, "
+                    . "idtd_category = $categoryID, idtd_priority = $priorityID, "
+                    . "idtd_class = $classID, idtd_status = $statusID "
+                    . "WHERE td_tasks.id_tasks = \"$task_id\";";
+
+                $sql3 = "INSERT INTO td_comments (comments, idtd_tasks, "
+                    . "entry_date) VALUES (\"$details\", $task_id, "
+                    . "now())";
             }
 
         if (!$result = mysqli_query($conn, $sql)) {
-            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            echo "Error: updating table " . $sql . "<br>" . mysqli_error($conn);
         } elseif (!$result3 = mysqli_query($conn, $sql3)) {
-             echo "Error: " . $sql3 . "<br>" . mysqli_error($conn);   
+             echo "Error: inserting into table" . $sql3 . "<br>" . mysqli_error($conn);   
             } else {
             header("Location: ./index.php");
         }
-        }
+        } // End of 'mod' POST processing
         ?>
+        <!-- Display the task table -->
         <form method="post" id="task_upd">
             <div class="container-fluid">
             <div style="height: 250px; max-height:350px; overflow-y: scroll">
@@ -116,7 +98,6 @@ and open the template in the editor.
                   </thead>
                   <tbody>
                     <?php
-                    //echo '<form method="post" action="update_task.php">';
                     $prj = mysqli_fetch_assoc($result);
                       echo '<tr>';
                       echo '<td class="align-middle" >';
@@ -199,18 +180,15 @@ and open the template in the editor.
                             echo $ddiff->format('%R%a');
                         echo '</td>';
                       echo '</tr>';
-                     
-                    //echo '</form>';
-                    
                     ?>
                    </tbody>
                 </table>
               </div>  
              </div>
-            <!-- </div> -->
             </div>
              <hr>
          </div>
+        <!-- Display the comments section -->    
         <div class="container-fluid">
             <div style="height: 250px; max-height:350px; overflow-y: scroll">
              <div class="row">
@@ -236,6 +214,7 @@ and open the template in the editor.
             </div>
             <hr>
         </div>
+        <!-- Display the comments entry section -->
         <div class="container-fluid">
             <div class="row">
                 <div class="col-sm-6">
@@ -248,7 +227,9 @@ and open the template in the editor.
                             </td>
                             <td>
                                 <div class="col-sm-3">
-                               <textarea name="details" form="task_upd" cols="40" rows="4" placeholder="Add a new comment here..">
+                               <textarea name="details" form="task_upd" 
+                                    cols="40" rows="4" 
+                                    placeholder="Add a new comment here..">
                                </textarea>
                                 </div>
                             </td>
@@ -257,20 +238,20 @@ and open the template in the editor.
                             </td>
                             <td>
                                 <div class="col-sm-1">
-                              <button class="btn btn-info" form="task_upd" type="submit" name="mod" value="Mod">
+                              <button class="btn btn-info" form="task_upd" 
+                                      type="submit" name="mod" value="Mod">
                                 Update Task
                               </button> 
                                 </div>
                             </td>
                         </tr>
-                       
                     </table>
-                
                 </div>
             </div>
         </div>
         </form>
         <?php
+        // Setup the footer display
         include 'footer.php';
         ?>
     </body>

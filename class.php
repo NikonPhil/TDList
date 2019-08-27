@@ -1,55 +1,45 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+
 <html>
     <head>
+        <!-- CSS files included in the header1.php file -->
          <?php include 'header1.php'; ?>
         <title>Class Management</title>
-        <!-- <link rel="stylesheet" type="text/css" href="TDList.css"> -->
+        
     </head>
     <body>
-        
         
         <div class="container-fluid">
         <h1>List of existing Classes</h1> 
         </div>
+        <!-- Setup the database connection or exit -->
        <?php
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
         $page_id = "Classes";
         if(! $conn) {
                 die('Could not connect : ' . mysqli_error());
-        } else {
-            echo '';
         }
-        // setup POST handling to add a new priority
+        // setup POST handling to add a new class
         if(isset($_POST['clname'])) {
-            // print_r($_POST); // Added to test the _POST variable
-            //echo '<br>';
-            // $filename = $_POST['filename'];
+            
             $class = $_POST['clname'];
             $sql = "INSERT INTO td_class (idtd_class, class)" . 
                     "VALUES (NULL, '$class')";
             $result = mysqli_query($conn, $sql);
 
             if(! $result ) {
-               die('Could not enter data: ' . mysqli_error($conn));
-            }           
-            
-            //echo $sql . "<br>"; // added to check construct of the sql statement
-            //echo '<p>Variable Priority = ' . $priority . '</p><br>';
-        } else { // Or display the current table with an option to add a priority
-            echo '<P></p>';
-        }
+               die('Could not insert data: ' . mysqli_error($conn));
+            }             
+        } 
         
         
-        // setup query to select current data
+        // setup query to display current data
         $sql = "SELECT class FROM td_class";
                 
         $result = mysqli_query($conn, $sql);
-        
+        if(! $result ) {
+               die('Could not select data: ' . mysqli_error($conn));
+            }
         // show current data in a table ?>
         <div class="container-fluid">
          <div style="height: 450px; max-height:450px; overflow-y: scroll">
@@ -59,26 +49,25 @@ and open the template in the editor.
                   <thead class="thead-dark">
                     <th>Classes</th>                                                
                   </thead>
-                <?php
-                    while ($row = mysqli_fetch_array($result)) {
-                      echo '<tr>';
-                        echo '<td>' . $row['class'] . '</td>';
-                        // echo '<td>' . $row['filename'] . '</td>';
-                      echo '</tr>';
-                    } ?>
+                    <?php
+                        while ($row = mysqli_fetch_array($result)) {
+                          echo '<tr>';
+                            echo '<td>' . $row['class'] . '</td>';
+                            // echo '<td>' . $row['filename'] . '</td>';
+                          echo '</tr>';
+                        } ?>
                 </table>
               </div>
                <div class="col-sm-8">
 
-           </div>
+               </div>
            </div>
          </div>
-             <hr>
+           <hr>
         </div>
 
-       <!--
-        // display form to add new data, (select a project)
-        // set up query for project name.. -->
+       <!-- display form to add new data, (select a project)
+        set up query for project name.. -->
         <div class="container-fluid">
             <div class="row">
               <div class="col-sm-4">
@@ -91,6 +80,7 @@ and open the template in the editor.
               </div>
             </div>
         </div>
-      <?php  include 'footer.php'; ?>  
+       <!-- Display the footer -->
+      <?php  include 'footer.php';?>  
     </body>
 </html>

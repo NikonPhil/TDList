@@ -1,5 +1,5 @@
-<!-- Header, setting up the title, and menu's -->
 <!DOCTYPE html >
+<!-- Header, setting up the title, and menu's -->
 <html>
     <head>
         <meta charset="UTF-8">
@@ -10,6 +10,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
         <link rel="stylesheet" type="text/css" href="TDList.css">
+        <!-- Add any additional styles (non-bootstrap or bootstrap mods here -->
         <style>
         hr {
             color: darkslateblue;
@@ -20,7 +21,15 @@
         br {
             height: 5px;
         }
-        </style>
+        .clear {
+            background-color: transparent;
+            color:black;
+            border: none;
+             }
+        .clear:hover {
+            color: red;
+        }
+         </style>
     </head>
     <body>
    
@@ -70,12 +79,11 @@
 <hr>
 </div>
 <?php    
-    
-$DBHost = "192.168.0.13";
-$DBName = "to_do_list";
-$DBUser = "pb";
-$DBPassword = "Vmwarent1";
-
+    // Setup database variables
+        $DBHost = "192.168.0.13";
+        $DBName = "to_do_list";
+        $DBUser = "pb";
+        $DBPassword = "Vmwarent1";
 ?>
     </body>
 </html>
