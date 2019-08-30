@@ -13,8 +13,8 @@
         <!-- Add any additional styles (non-bootstrap or bootstrap mods here -->
         <style>
         hr {
-            color: darkslateblue;
-            background-color: darkslateblue;
+            color: #292b2c;
+            background-color: #292b2c;
             height: 3px;
             border: none;
             }
@@ -28,6 +28,10 @@
              }
         .clear:hover {
             color: red;
+        }
+        .chart-container {
+        width: 500px;
+        height: 300px;
         }
          </style>
     </head>

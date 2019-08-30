@@ -91,6 +91,7 @@
                         echo '<td>' . $row['entry_date'] . '</td>';
                       echo '</tr>';
                     } 
+                   
                     ?>
                 </table>
               </div>  

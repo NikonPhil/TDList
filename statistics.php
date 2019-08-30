@@ -9,21 +9,49 @@
      
         <?php include 'header1.php'; ?>
     <style>
-      .chart-container {
-        width: 500px;
-        height: 300px;
-      }
-      .data-block {
-          border-color: cornflowerblue;
-          border-width: thick;
-          border: solid;
-      }
-      .td narrow {
-          width: 30px;
-      }
-      .td wide {
-          width: 205px;
-      }
+    
+     .g1 { grid-area: g1; }
+     .g2 { grid-area: g2; }
+     .g3 { grid-area: g3; }
+     .g4 { grid-area: g4; }
+     .g5 { grid-area: g5; }
+     
+
+    .wrapper {
+      display: grid;
+      width: 95%;
+      grid-template-columns: 1fr 4fr 4fr 2fr;
+      gap: 40px;
+      grid-template-areas:  '. g1     g2     g5'
+                            '. g3     g4     g5';
+    }
+    /* .wrapper > div { border: 1px solid black;} */
+    .sum { grid-area: sum; }
+    .t1  { grid-area: t1; }
+    .t2  { grid-area: t2; }
+    .t3  { grid-area: t3; }
+    .t4  { grid-area: t4; }
+    .t5  { grid-area: t5; }
+    .t6  { grid-area: t6; }
+    .v1  { grid-area: v1; }
+    .v2  { grid-area: v2; }
+    .v3  { grid-area: v3; }
+    .v4  { grid-area: v4; }
+    
+    .ttl {
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(4, auto);
+        gap: 10px;
+        border: 1px solid slategray;
+        background-color: lightblue;
+        padding: 5px;
+        grid-template-areas: '.  sum sum sum sum sum'
+                             '.  t1   t1  t1  v1  .  '
+                             '.  t2   t2  t2  v2  .  '
+                             '.  t3   t3  t3  v3  t4  '
+                             '.  t5   t5  t5  v4  .  ';
+    } 
     </style>
   </head>
 
@@ -32,75 +60,66 @@
       <div class="container-fluid">
           <h4>To Do List Dashboard</h4>
       </div>
-      <div class="container-fluid">
-          <div class="row">
-              <div class="col-sm-6">
-                  <div class="chart-container">
-                    <canvas id="mycanvas"></canvas>
-                </div> 
-              </div>
-              <div class="col-sm-6">
-                  <div class="chart-container">
-                    <canvas id="mycanvas2"></canvas>
+      <!-- Modification for CSS Grid -->
+      <div class="wrapper">
+        <div class="g1">
+            <div class="chart-container">
+                <canvas id="mycanvas"></canvas>
+            </div> 
+        </div>
+        <div class="g2">
+            <div class="chart-container">
+                <canvas id="mycanvas2"></canvas>
+            </div>
+        </div>
+        <div class="g3">
+            <div class="chart-container">
+                <canvas id="mycanvas3"></canvas>
+            </div>
+        </div>
+        <div class="g4">Graph 4</div>
+        <div class="g5">
+            <div class="ttl">
+                  <div class="sum">
+                      <div><p><b>Summary</b></p>
+                           </div>
+                  </div>
+                  <div class="t1">
+                    <p>Number of tasks</p>
+                  </div>
+                  <div class="v1">
+                            <?php
+                                echo '<p id="d4"></p>';
+                            ?>
+                  </div>
+                  <div class="t2">
+                    <p>Number of Projects</p>
+                  </div>
+                  <div class="v2">
+                            <?php
+                             echo '<p id="d5"></p>';
+                             ?> 
+                  </div>
+                <div class="t3">
+                    <p>Oldest Task</p>
                 </div>
-              </div>
-          </div>
-          <div class="row">
-              <div class="col-sm-6">
-                  <div class="chart-container">
-                    <canvas id="mycanvas3"></canvas>
+                  <div class="v3">
+                     <?php echo '<p id="d6"></p>'; ?>
                   </div>
-              </div>
-              <div class="col-sm-6">
-                  <div class="container-fluid">
-                      <div class="row">
-                          <div class="col-sm-6">
-                           <div class="alert alert-dark mb-0">Summary</div>
-                          </div>
-                      </div>
-                      <div class="row">
-                              <div class="col-sm-6">
-                                  <div class="alert alert-info mb-0">
-                                      <?php
-                                      echo '<p id="d4"></p>';
-                                      ?>
-                                  </div>
-                              </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-sm-6">
-                           <div class="alert alert-dark mb-0"></div>
-                          </div>
-                      </div>
-                      <div class="row">
-                              <div class="col-sm-6">
-                                  <div class="alert alert-info mb-0">
-                                     <?php
-                                      echo '<p id="d5"></p>';
-                                      ?> 
-                                  </div>
-                              </div>
-                      </div>
-                      <div class="row">
-                          <div class="col-sm-6">
-                           <div class="alert alert-dark mb-0"></div>
-                          </div>
-                      </div>
-                      <div class="row">
-                              <div class="col-sm-6">
-                                  <div class="alert alert-info mb-0">
-                                      <?php
-                                      echo '<p id="d6"></p>';
-                                      echo '<p id="d7"></p>';
-                                      ?> 
-                                  </div>
-                              </div>
-                      </div>
-                  </div>
-              </div> 
-                      
-          </div>
+                <div class="t4">
+                    <p>Days</p>
+                </div>
+                <div class="t5">
+                    <p>Task</p>
+                </div>
+                <div class="v4">
+                    <?php echo '<p id="d7"></p>'; ?>
+                </div>
+            </div>
+        </div>
       </div>
+ 
+      <!-- End of CSS Grid Mods -->
         
       
     <?php
@@ -218,11 +237,11 @@ var days = JSON.parse('<?php echo json_encode($days) ?>' );
 //console.log("days");
 //console.log(days);
 
-document.getElementById("d4").innerHTML = "# Tasks    :    " + tcount['task_count'];
-document.getElementById("d5").innerHTML = "# Projects :    " + pcount['project_count'];
-document.getElementById("d6").innerHTML = "# Oldest   :    " + days[1] + " Days";
-document.getElementById("d7").innerHTML = " Name      : =  " + days[0];
-// split the object into two arrays
+document.getElementById("d4").innerHTML = tcount['task_count'];
+document.getElementById("d5").innerHTML = pcount['project_count'];
+document.getElementById("d6").innerHTML = days[1];
+document.getElementById("d7").innerHTML = days[0];
+//split the object into two arrays
 var category = [];
 var count = [];
 for(var i in newdata){
@@ -241,7 +260,7 @@ for(var i in newdata){
    project.push(newdata3[i].labelsc);
    count3.push(newdata3[i].seriesc);
  }
- /* check the data
+// check the data
  console.log("Category");
  console.log(category);
  
@@ -258,7 +277,7 @@ for(var i in newdata){
  console.log(project);
  
  console.log("count3");
- console.log(count3); */
+ console.log(count3);
  
  // Create a new object from the two arrays
  var chartdata = {
@@ -268,10 +287,10 @@ for(var i in newdata){
         label: "By Category",
         fill: true,
         lineTension: 0.1,
-        backgroundColor: "rgba(255, 204, 230, 0.55)",
-        borderColor: "rgba(255, 204, 230, 1)",
-        pointHoverBackgroundColor: "rgba(255, 204, 230, 1)",
-        pointHoverBorderColor: "rgba(255, 204, 230, 1)",
+        backgroundColor: "rgba(240, 173, 78, 0.55)",
+        borderColor: "rgba(240, 173, 78, 1)",
+        pointHoverBackgroundColor: "rgba(240, 173, 78, 1)",
+        pointHoverBorderColor: "rgba(240, 173, 78, 1)",
         data: count
      }
      ]
@@ -284,10 +303,10 @@ for(var i in newdata){
          label: "By Priority",
          fill: true,
         lineTension: 0.1,
-        backgroundColor: "rgba(255, 204, 230, 0.55)",
-        borderColor: "rgba(255, 204, 230, 1)",
-        pointHoverBackgroundColor: "rgba(255, 204, 230, 1)",
-        pointHoverBorderColor: "rgba(255, 204, 230, 1)",
+        backgroundColor: "rgba(240, 173, 78, 0.55)",
+        borderColor: "rgba(240, 173, 78, 1)",
+        pointHoverBackgroundColor: "rgba(240, 173, 78, 1)",
+        pointHoverBorderColor: "rgba(240, 173, 78, 1)",
          data: count2
      }
      ]
@@ -300,10 +319,10 @@ for(var i in newdata){
          label: "By Project",
          fill: true,
         lineTension: 0.1,
-        backgroundColor: "rgba(255, 204, 230, 0.55)",
-        borderColor: "rgba(255, 204, 230, 1)",
-        pointHoverBackgroundColor: "rgba(255, 204, 230, 1)",
-        pointHoverBorderColor: "rgba(255, 204, 230, 1)",
+        backgroundColor: "rgba(240, 173, 78, 0.55)",
+        borderColor: "rgba(240, 173, 78, 1)",
+        pointHoverBackgroundColor: "rgba(240, 173, 78, 1)",
+        pointHoverBorderColor: "rgba(240, 173, 78, 1)",
          data: count3
      }
      ]
@@ -336,7 +355,7 @@ for(var i in newdata){
  var ctx3 = $("#mycanvas3");
  
  var LineGraph = new Chart(ctx3, {
-        type: 'bar',
+        type: 'line',
         data: chartdata3
       });
 
