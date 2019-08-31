@@ -20,7 +20,7 @@
     .wrapper {
       display: grid;
       width: 95%;
-      grid-template-columns: 1fr 4fr 4fr 2fr;
+      grid-template-columns: 1fr 4fr 4fr 3fr;
       gap: 40px;
       grid-template-areas:  '. g1     g2     g5'
                             '. g3     g4     g5';
@@ -33,15 +33,17 @@
     .t4  { grid-area: t4; }
     .t5  { grid-area: t5; }
     .t6  { grid-area: t6; }
+    .t7  { grid-area: t7; }
     .v1  { grid-area: v1; }
     .v2  { grid-area: v2; }
     .v3  { grid-area: v3; }
     .v4  { grid-area: v4; }
-    
+    .v5  { grid-area: v5; }
+    .v6  { grid-area: v6; }
     .ttl {
         display: grid;
         grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: repeat(4, auto);
+        grid-template-rows: repeat(7, auto);
         gap: 10px;
         border: 1px solid slategray;
         background-color: lightblue;
@@ -50,7 +52,9 @@
                              '.  t1   t1  t1  v1  .  '
                              '.  t2   t2  t2  v2  .  '
                              '.  t3   t3  t3  v3  t4  '
-                             '.  t5   t5  t5  v4  .  ';
+                             '.  t5   t5  t5  v4  .  '
+                             '.  t6   t6  t6  v5  .  '
+                             '.  t7   t7  t7  v6  .  ';
     } 
     </style>
   </head>
@@ -77,7 +81,11 @@
                 <canvas id="mycanvas3"></canvas>
             </div>
         </div>
-        <div class="g4">Graph 4</div>
+        <div class="g4">
+            <div class="chart-container">
+                <canvas id="mycanvas4"></canvas>
+            </div>
+        </div>
         <div class="g5">
             <div class="ttl">
                   <div class="sum">
@@ -115,9 +123,22 @@
                 <div class="v4">
                     <?php echo '<p id="d7"></p>'; ?>
                 </div>
+
+                <div class="t6">
+                        <p>Filename</p>
+                </div>
+                <div class="v5">
+                    <?php echo '<p id="d8"></p>'; ?>
+                </div>
+                <div class="t7">
+                        <p>Project</p>
+                </div>
+                <div class="v6">
+                    <?php echo '<p id="d9"></p>'; ?>
+                </div>
             </div>
+         </div>
         </div>
-      </div>
  
       <!-- End of CSS Grid Mods -->
         
@@ -168,6 +189,16 @@
                 echo '<could not query db<br>';
                die('Could not select data: ' . mysqli_error($conn));
             }
+        $sql7 = "SELECT count(t.task) AS seriesd, p.td_status AS labelsd "
+            . "FROM td_tasks t JOIN td_status p "
+            . "WHERE t.idtd_status = p.idtd_status "
+            . "GROUP BY p.idtd_status";
+        $result7 = mysqli_query($conn, $sql7);
+            if(!$result7 ) {
+                echo '<could not query db<br>';
+               die('Could not select data: ' . mysqli_error($conn));
+            }
+            
         
         //loop through the returned data
             $data = array();
@@ -186,9 +217,8 @@
             $data5 = mysqli_fetch_assoc($result5);
             // Calculate oldest Task outstanding
             // Get the oldest task
-            $sql6 = "SELECT t.task, t.entry_date "
-                    . "FROM td_tasks t "
-                    . "ORDER BY t.entry_date ASC";
+           
+            $sql6 ="SELECT * FROM oldest_task";
             $result6 = mysqli_query($conn, $sql6);
             if(!$result6 ) {
                 echo '<could not query db<br>';
@@ -208,10 +238,18 @@
             $days = array();
             $days[0] = $data6['task'];
             $days[1] = $age;
+            $days[2] = $data6['filename'];
+            $days[3] = $data6['project_name'];
+            
+            
+            $data7 = array();
+            foreach ($result7 as $row) {
+              $data7[] = $row;
+            }
             mysqli_close($conn);
             
         //print json_encode($data);
-        //print json_encode($data2);
+        //print json_encode($data7);
         
         $myJSON = json_encode($data);
         $myJSON2 = json_encode($data2);
@@ -226,6 +264,7 @@
 var newdata = JSON.parse( '<?php echo json_encode($data) ?>' );
 var newdata2 = JSON.parse( '<?php echo json_encode($data2) ?>' );
 var newdata3 = JSON.parse( '<?php echo json_encode($data3) ?>' );
+var newdata4 = JSON.parse( '<?php echo json_encode($data7) ?>' );
 // Set up the values for the summary
 var tcount = JSON.parse('<?php echo json_encode($data4) ?>' );
 var pcount = JSON.parse('<?php echo json_encode($data5) ?>' );
@@ -241,6 +280,8 @@ document.getElementById("d4").innerHTML = tcount['task_count'];
 document.getElementById("d5").innerHTML = pcount['project_count'];
 document.getElementById("d6").innerHTML = days[1];
 document.getElementById("d7").innerHTML = days[0];
+document.getElementById("d8").innerHTML = days[2];
+document.getElementById("d9").innerHTML = days[3];
 //split the object into two arrays
 var category = [];
 var count = [];
@@ -259,6 +300,12 @@ for(var i in newdata){
  for(var i in newdata3){
    project.push(newdata3[i].labelsc);
    count3.push(newdata3[i].seriesc);
+ }
+ var tdstatus = [];
+ var count4 = [];
+ for(var i in newdata4){
+   tdstatus.push(newdata4[i].labelsd);
+   count4.push(newdata4[i].seriesd);
  }
 // check the data
  console.log("Category");
@@ -279,6 +326,11 @@ for(var i in newdata){
  console.log("count3");
  console.log(count3);
  
+ console.log("tdStatus")
+ console.log(tdstatus);
+ 
+ console.log("count4");
+ console.log(count4);
  // Create a new object from the two arrays
  var chartdata = {
      labels: category,
@@ -327,6 +379,21 @@ for(var i in newdata){
      }
      ]
  }
+ var chartdata4 = {
+     labels: tdstatus,
+     datasets: [
+         {
+         label: "By Status",
+         fill: true,
+        lineTension: 0.1,
+        backgroundColor: "rgba(240, 173, 78, 0.55)",
+        borderColor: "rgba(240, 173, 78, 1)",
+        pointHoverBackgroundColor: "rgba(240, 173, 78, 1)",
+        pointHoverBorderColor: "rgba(240, 173, 78, 1)",
+         data: count4
+     }
+     ]
+ }
  /* Check the data
   console.log("chartdata");
   console.log(chartdata);
@@ -359,6 +426,12 @@ for(var i in newdata){
         data: chartdata3
       });
 
+var ctx4 = $("#mycanvas4");
+ 
+ var LineGraph = new Chart(ctx4, {
+        type: 'line',
+        data: chartdata4
+      });
   </script>
   <?php include './footer.php'; ?>
   </body>
