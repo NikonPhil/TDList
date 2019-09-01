@@ -6,7 +6,38 @@
         <?php include 'header1.php'; ?>
         
         <title>To Do List Main Page</title>
-        
+        <style>
+            .title {grid-area: title; }
+.txt1 {grid-area: txt1; text-align: right; }
+.txt2 {grid-area: txt2; text-align: right; }
+.txt3 {grid-area: txt3; text-align: right; }
+.txt4 {grid-area: txt4; text-align: right; }
+.txt5 {grid-area: txt5; text-align: right; }
+.txt5a {grid-area: txt5a; text-align: right; }
+.txt6 {grid-area: txt6; text-align: right; }
+.txt7 {grid-area: txt7; text-align: right; }
+.sel1 {grid-area: sel1; text-align: center;}
+.sel2 {grid-area: sel2; text-align: center;}
+.sel3 {grid-area: sel3; text-align: center;}
+.sel4 {grid-area: sel4; text-align: center;}
+.sel5 {grid-area: sel5;text-align: center; }
+.sel5a {grid-area: sel5a;text-align: center; }
+.in1 {grid-area: in1; text-align: left;}
+.in2 {grid-area: in2; text-align: left;}
+.b1 {grid-area: b1; text-align: center;}
+.container-add {
+  display: grid; width:65%;
+  margin: 0 0 0 0;
+  padding: 5px;
+  grid-template-columns: 60px repeat(2,1fr) 1fr repeat(4,1fr) 60px;
+  gap: 10px;
+  grid-template-areas: 'title title title title title title title title title .'
+    'txt1 sel1 txt2 sel2 txt3 sel3 txt4 sel4 sel4 .'
+    'txt5 sel5 txt5a sel5a txt6 in1 txt7 in2 in2  .'
+    '. b1 . . . . . in2 in2 .';
+}
+
+        </style>   
     </head>
     <body>
         
@@ -101,15 +132,11 @@
          </div>
         <!-- Set up the area to add a new task -->
         <form method="post">
-        <div class="container-fluid">
-            <p>To add a new Task, enter the details below</p>
-            
-            <div class="row">
-                <div class="col-sm-1">
-                    Project
-                </div>
-                <div class="col-sm-1">
-                    <?php
+        <div class="container-add">
+  <div class="title" ><h5>To add a new task enter the details below:</h5></div>
+  <div class="txt1">Project</div>
+  <div class="sel1">
+    <?php
                     $sql1 = "SELECT idtd_projects, project_name FROM td_projects"; 
                     
                     $res1 = mysqli_query($conn, $sql1);
@@ -124,12 +151,9 @@
                         }
                     echo "</select>";
                     ?>
-                </div>
-                <div class="col-sm-1">
-                    File
-                </div>
-                <div class="col-sm-3">
-                    <?php
+  </div>
+  <div class="txt2">Filename</div>
+  <div class="sel2"><?php
                     $sql2 = "SELECT idtd_filename, filename FROM td_filename";
                     //echo $sql2 . "<br>";
                     $res2 = mysqli_query($conn, $sql2);
@@ -143,13 +167,10 @@
                             . "{$row2['filename']}</option>";
                     }
                     echo "</select>";
-                    ?>
-                </div>
-                <div class="col-sm-1">
-                    Status
-                </div>
-                <div class="col-sm-1">
-                    <?php
+                    ?></div>
+  <div class="txt3">Status</div>
+  <div class="sel3">
+    <?php
                     $sql3 = "SELECT idtd_status, td_status FROM td_status";
                     //echo $sql3 . "<br>";
                     $res3 = mysqli_query($conn, $sql3);
@@ -164,12 +185,10 @@
                     }
                 echo "</select>";
                 ?>
-                </div>
-                <div class="col-sm-1">
-                    Class
-                </div>
-                <div class="col-sm-1">
-                    <?php
+  </div>
+  <div class="txt4">Class</div>
+  <div class="sel4">
+    <?php
                      $sql4 = "SELECT idtd_class, class FROM td_class";
                     $res4 = mysqli_query($conn, $sql4);
                     if(!$res4 ) {
@@ -183,13 +202,11 @@
                     }
                 echo "</select>";
                 ?>
-                </div>
-                <div class="col-sm-1">
-                    Priority
-                </div>
-                <div class="col-sm-1">
-                    <?php
-                    $sql5 = "SELECT idtd_priority, priority FROM td_priority";
+  </div>
+  <div class="txt5">Priority</div>
+  <div class="sel5">
+    <?php
+    $sql5 = "SELECT idtd_priority, priority FROM td_priority";
                     $res5 = mysqli_query($conn, $sql5);
                     if(!$res5 ) {
                         echo $sql5;
@@ -202,18 +219,10 @@
                     }
                     echo "</select>";
                     ?>
-                </div>
-                
-            </div>
-        </div>
-        <br>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-1">
-                    Category
-                </div>
-                <div class="col-sm-1">
-                    <?php
+  </div>
+  <div class="txt5a">Category</div>
+  <div class="sel5a">
+   <?php
                     $sql6 = "SELECT idtd_category, category FROM td_category";
                     //echo $sql6 . "<br>";
                     $res6 = mysqli_query($conn, $sql6);
@@ -227,34 +236,21 @@
                             . "{$row6['category']}</option>";
                     }
                     echo "</select>";
-                    ?>
-                </div>
-                <div class="col-sm-1">
-                    Task
-                </div>
-                <div class="col-sm-4">
-                  <input name = "task" type = "text" id = "task">
-                </div>
-                <div class="col-sm-1">
-                    Details
-                </div>
-                <div class="col-sm-4">
-                   <input name = "details" type = "text" id = "details">
-                </div>
-        </div>
-            <br>
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-sm-3">
-                    <button class="btn btn-info" name="add" value="Add" 
+                    ?> 
+    </div>
+  <div class="txt6">Task</div>
+  <div class="in1">
+   <input name = "task" type = "text" id = "task">
+  </div>
+  <div class="txt7">Details</div>
+  <div class="in2">
+    <input name = "details" type = "text" id = "details">
+  </div>
+  <div class="b1">
+    <button class="btn btn-info" name="add" value="Add" 
                             type="submit">Add New Task</button> 
-                </div>
-                <div class="col-sm-6">
-                    <!-- Dummy cell to maintain structure -->
-                </div>
-            </div>
-        </div>
-        </div>
+  </div>
+</div>
         </form>
         <?php 
         // Set up page footer
