@@ -3,12 +3,35 @@
 <html>
     <head>
         <!-- CSS files included in header1.php -->
-        
+         <?php include 'header1.php'; ?>
         <title>Add a new filename to the database</title>
+     <style>
+    
+     .intro { grid-area: intro; }
+     .t1 { grid-area: t1; text-align: right; }
+     .v1 { grid-area: v1; text-align: left; }
+     .t2 { grid-area: t2; text-align: right; }
+     .v2 { grid-area: v2; text-align: left; }
+     .b2 { grid-area: b2; text-align: center; }
+     
+
+    .wrapper {
+      display: grid;
+      width: 30%;
+      grid-template-columns: 20px repeat(4,1fr) 20px;
+      margin: 0 0 0 0;
+      padding: 5px;
+      gap: 30px;
+      grid-template-areas:  'intro intro  intro  intro intro intro'
+                            '.     t1     v1     t2    v2    .'
+                            '.     b2     .      .     .     .';
+    }
+    
+    </style>
     </head>
     <body>
-        <?php include 'header1.php';
-
+       
+<?php
         echo '<h1>List of existing filenames</h1>';
         // Setup database connection and exit if there is a problem
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
@@ -57,7 +80,6 @@
                     <th>Filename</th>
                   </thead>
                     <?php
-
                   while ($row = mysqli_fetch_array($result)) {
                     echo '<tr>';
                       echo '<td>' . $row['project_name'] . '</td>';
@@ -71,37 +93,44 @@
           </div>
             <hr>
         </div>
-        <!-- Setup the add new filename area -->
-        <div class="container-fluid">
-            <div class="row">
-              <div class="col-sm-4">
-                <p>To add a new Filename select the project, enter the name
-                    and submit</p>
-                      <form method="post"> <!-- post to current file -->
-                       <h3>Project</h3>
-                       <?php
-                        $sql1 = "SELECT idtd_projects, project_name FROM "
-                            . "td_projects";
-                        $result = mysqli_query($conn, $sql1);
-                        // $row = mysqli_fetch_array($result);
-                        echo '<select name="pid">';
-                            foreach ($result as $row) {
-                            echo "<option value=\"{$row['idtd_projects']}\">"
-                                . "{$row['project_name']}</option>";
-                            }
-                        echo "</select>";
-                        ?>
-                       <h3>Filename</h3>
-                        <input name = "fname" type = "text" id = "fname">
-                        <input type="submit" class="btn btn-info" 
-                               value="Add Filename">
-                      </form>
-              </div>
-              <div class="col-sm-8">
-                  <!-- Blank cell to aid distribution across the width -->
-              </div>
+        <!-- Setup the add new filename area using CSS Grid -->
+        <form method="post">
+            
+        <div class="wrapper">
+         
+            <div class="intro">
+             <h5>To add a new Filename select the project, enter the name
+                              and submit</h5>
+            
             </div>
+            <div class="t1">Project</div>
+            <div class="v1">
+             <?php
+                $sql1 = "SELECT idtd_projects, project_name FROM "
+                    . "td_projects";
+                $result = mysqli_query($conn, $sql1);
+                // $row = mysqli_fetch_array($result);
+                echo '<select name="pid">';
+                    foreach ($result as $row) {
+                    echo "<option value=\"{$row['idtd_projects']}\">"
+                        . "{$row['project_name']}</option>";
+                    }
+                echo "</select>";
+             ?>
+            </div>
+            <div class="t2">
+             Filename
+            </div>
+            <div class="v2">
+             <input name = "fname" type = "text" id = "fname">
+            </div>
+            <div class="b2">
+              <input type="submit" class="btn btn-info" 
+                                         value="Add Filename">           
+            </div>
+         
         </div>
+            </form>
         <!-- Add the footer code -->
         <?php include 'footer.php'; ?>
     </body>

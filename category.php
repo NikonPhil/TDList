@@ -5,7 +5,29 @@
         <!-- CSS files included in header1.php -->
         <?php include 'header1.php';?>
         <title>Category Management</title>
-        
+    <style>
+    
+     .intro { grid-area: intro; }
+     .t1 { grid-area: t1; text-align: right; }
+     .v1 { grid-area: v1; text-align: left; }
+     .t2 { grid-area: t2; text-align: right; }
+     .v2 { grid-area: v2; text-align: left; }
+     .b2 { grid-area: b2; text-align: center; }
+     
+
+    .wrapper {
+      display: grid;
+      width: 30%;
+      grid-template-columns: 20px repeat(4,1fr) 20px;
+      margin: 0 0 0 0;
+      padding: 5px;
+      gap: 30px;
+      grid-template-areas:  'intro intro  intro  intro intro intro'
+                            '.     t1     v1     .     .     .'
+                            '.     b2     .      .     .     .';
+    }
+    
+    </style>    
     </head>
     <body>
         
@@ -65,22 +87,28 @@
           </div>
             <hr>
         </div>
-        <div class="container-fluid">
-            <div class="row">
-              <div class="col-sm-4">
-                <p>To add a new Category enter the name and submit</p>      
-                      <form method="post">
-                       <h3>Category</h3>
-                        <input name = "cname" type = "text" id = "cname">   
-                       <input type="submit" class="btn btn-info" 
-                              value="Add Category">
-                      </form>
-              </div>
-              <div class="col-sm-8">
-
-              </div>
+        <!-- Setup the add new filename area using CSS Grid -->
+        <form method="post">
+            
+        <div class="wrapper">
+         
+            <div class="intro">
+             <h5>To add a new Category enter the name and submit</h5>
+            
             </div>
+            <div class="t1">Category</div>
+            <div class="v1">
+             <input name = "cname" type = "text" id = "cname">
+            </div>
+            
+            <div class="b2">
+              <input type="submit" class="btn btn-info" 
+                              value="Add Category">           
+            </div>
+         
         </div>
+            </form>
+        
         <!-- Show the footer -->
         <?php include 'footer.php';
         ?>

@@ -5,7 +5,29 @@
         <!-- CSS files included in the header1.php file -->
          <?php include 'header1.php'; ?>
         <title>Class Management</title>
-        
+    <style>
+    
+     .intro { grid-area: intro; }
+     .t1 { grid-area: t1; text-align: right; }
+     .v1 { grid-area: v1; text-align: left; }
+     .t2 { grid-area: t2; text-align: right; }
+     .v2 { grid-area: v2; text-align: left; }
+     .b2 { grid-area: b2; text-align: center; }
+     
+
+    .wrapper {
+      display: grid;
+      width: 30%;
+      grid-template-columns: 20px repeat(4,1fr) 20px;
+      margin: 0 0 0 0;
+      padding: 5px;
+      gap: 30px;
+      grid-template-areas:  'intro intro  intro  intro intro intro'
+                            '.     t1     v1     .     .     .'
+                            '.     b2     .      .     .     .';
+    }
+    
+    </style>        
     </head>
     <body>
         
@@ -65,21 +87,27 @@
          </div>
            <hr>
         </div>
-
-       <!-- display form to add new data, (select a project)
-        set up query for project name.. -->
-        <div class="container-fluid">
-            <div class="row">
-              <div class="col-sm-4">
-                    <p>To add a new Class enter the name and submit</p>
-                    <form method="post"> 
-                        <h3>Classes</h3>
-                           <input name ="clname" type="text" id="clname">
-                           <input type="submit" class="btn btn-info" value="Add Class">
-                    </form>
-              </div>
+        <!-- Setup the add new filename area using CSS Grid -->
+        <form method="post">
+            
+        <div class="wrapper">
+         
+            <div class="intro">
+             <h5>To add a new Class enter the name and submit</h5>
+            
             </div>
+            <div class="t1">Classes</div>
+            <div class="v1">
+             <input name ="clname" type="text" id="clname">
+            </div>
+            
+            <div class="b2">
+              <input type="submit" class="btn btn-info" value="Add Class">           
+            </div>
+         
         </div>
+        </form>
+       
        <!-- Display the footer -->
       <?php  include 'footer.php';?>  
     </body>

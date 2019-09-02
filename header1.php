@@ -6,10 +6,11 @@
         <title>To Do List</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Aclonica' rel='stylesheet'>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-        <link rel="stylesheet" type="text/css" href="TDList.css">
+        <!-- <link rel="stylesheet" type="text/css" href="TDList.css"> -->
         <!-- Add any additional styles (non-bootstrap or bootstrap mods here -->
         <style>
         hr {
@@ -33,6 +34,10 @@
         width: 500px;
         height: 300px;
         }
+        .pb-logo {
+            font-family: Aclonica;
+            color: sandybrown
+        }
          </style>
     </head>
     <body>
@@ -43,7 +48,7 @@
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
    <!-- Navbar text -->
   <span class="navbar-text">
-      <span style="color: sandybrown"><h4><b>Simple To-Do Tracker</b></h4></span>
+      <span class='pb-logo'><h4><b>Simple To-Do Tracker</b></h4></span>
   </span>
    <div class="p-2 mr-auto navbar-dark"></div>
     <ul class="navbar-nav">

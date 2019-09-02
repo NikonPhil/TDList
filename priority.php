@@ -6,7 +6,29 @@
         <?php include 'header1.php'; ?>
         
         <title>Priority data</title>
-        
+    <style>
+    
+     .intro { grid-area: intro; }
+     .t1 { grid-area: t1; text-align: right; }
+     .v1 { grid-area: v1; text-align: left; }
+     .t2 { grid-area: t2; text-align: right; }
+     .v2 { grid-area: v2; text-align: left; }
+     .b2 { grid-area: b2; text-align: center; }
+     
+
+    .wrapper {
+      display: grid;
+      width: 30%;
+      grid-template-columns: 20px repeat(4,1fr) 20px;
+      margin: 0 0 0 0;
+      padding: 5px;
+      gap: 30px;
+      grid-template-areas:  'intro intro  intro  intro intro intro'
+                            '.     t1     v1     .     .     .'
+                            '.     b2     .      .     .     .';
+    }
+    
+    </style>    
     </head>
     <body>
         
@@ -68,22 +90,27 @@
           </div>
            <hr>
          </div>
-        <!-- Setup the section for adding a new priority -->
-        <div class="container-fluid">
-            <div class="row">
-              <div class="col-sm-4">
-                <p>To add a new priority enter the name and submit</p>      
-                      <form method="post">
-                       <h3>Priority</h3>
-                        <input name = "pname" type = "text" id = "pname">   
-                        <input type="submit" class="btn btn-info" value="Add Priority">
-                      </form>
-              </div>
-              <div class="col-sm-8">
-                  <!-- dummy cell to maintain spacing -->
-              </div>
+        <!-- Setup the add new priority area using CSS Grid -->
+        <form method="post">
+            
+        <div class="wrapper">
+         
+            <div class="intro">
+             <h5>To add a new Priority enter the name and submit</h5>
+            
             </div>
+            <div class="t1">Priority</div>
+            <div class="v1">
+             <input name = "pname" type = "text" id = "pname">
+            </div>
+            
+            <div class="b2">
+              <input type="submit" class="btn btn-info" value="Add Priority">          
+            </div>
+         
         </div>
+        </form>
+        
         <!-- Set up the footer -->
        <?php  
             include 'footer.php'; 

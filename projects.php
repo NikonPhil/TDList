@@ -6,7 +6,29 @@
         <?php include 'header1.php'; ?>
 
         <title>Add a new project to the database</title>
+    <style>
+    
+     .intro { grid-area: intro; }
+     .t1 { grid-area: t1; text-align: right; }
+     .v1 { grid-area: v1; text-align: left; }
+     .t2 { grid-area: t2; text-align: right; }
+     .v2 { grid-area: v2; text-align: left; }
+     .b2 { grid-area: b2; text-align: center; }
+     
 
+    .wrapper {
+      display: grid;
+      width: 45%;
+      grid-template-columns: 20px repeat(4,1fr) 20px;
+      margin: 0 0 0 0;
+      padding: 5px;
+      gap: 30px;
+      grid-template-areas:  'intro intro  intro  intro intro intro'
+                            '.     t1     v1     t2    t2    v2'
+                            '.     b2     .      .     .     .';
+    }
+    
+    </style>
     </head>
     <body>
         <div class="container-fluid">
@@ -69,22 +91,32 @@
           </div>
            <hr>
          </div>
-        
-        <!-- display form to add new data, (select a project) -->
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-sm-4">
-                <p>To add a new project enter the name and description and submit</p>
-                  <form method="post">
-                      <h3>Project Name</h3>
-                        <input name="prname" type="text">
-                      <h3>Project Description</h3>
-                        <input name="prdesc" type="text">
-                        <input type="submit" class="btn btn-info" value="Add Project"> 
-                  </form>
-              </div>
+        <!-- Setup the add new filename area using CSS Grid -->
+        <form method="post">
+            
+        <div class="wrapper">
+         
+            <div class="intro">
+             <h5>To add a new project enter the name and description and submit</h5>
+            
             </div>
-          </div>
+            <div class="t1">Project Name</div>
+            <div class="v1">
+             <input name="prname" type="text">
+            </div>
+            <div class="t2">
+             Project Description
+            </div>
+            <div class="v2">
+             <input name="prdesc" type="text">
+            </div>
+            <div class="b2">
+              <input type="submit" class="btn btn-info" value="Add Project">           
+            </div>
+         
+        </div>
+            </form>
+        
         <!-- Set up the footer -->
         <?php  
             include 'footer.php'; 

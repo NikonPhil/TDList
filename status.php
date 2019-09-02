@@ -4,7 +4,29 @@
   <head>
       <!-- CSS files added via header1.php -->
       <?php include 'header1.php'; ?>
-      
+    <style>
+    
+     .intro { grid-area: intro; }
+     .t1 { grid-area: t1; text-align: right; }
+     .v1 { grid-area: v1; text-align: left; }
+     .t2 { grid-area: t2; text-align: right; }
+     .v2 { grid-area: v2; text-align: left; }
+     .b2 { grid-area: b2; text-align: center; }
+     
+
+    .wrapper {
+      display: grid;
+      width: 30%;
+      grid-template-columns: 20px repeat(4,1fr) 20px;
+      margin: 0 0 0 0;
+      padding: 5px;
+      gap: 30px;
+      grid-template-areas:  'intro intro  intro  intro intro intro'
+                            '.     t1     v1     .     .     .'
+                            '.     b2     .      .     .     .';
+    }
+    
+    </style>      
     <title>Status Page</title>
             
   </head>
@@ -68,24 +90,28 @@
          </div>
           <hr>
         </div>
-
-        <!-- display form to add new data, (select a status) -->       
-        <div class="container-fluid">
-            <div class="row">
-              <div class="col-sm-4">
-                    <p>To add a new status enter the name and submit</p>                                                 
-                        <form method="post"> 
-                            <h3>Status</h3>
-                                <input name ="sname" type="text" id="sname">
-                           <input type="submit" class="btn btn-info" 
-                                  value="Add Status"> 
-                        </form>       
-              </div>
-              <div class="col-sm-8">
-                 <!-- Dummy cell to maintain layout --> 
-              </div>
+        <!-- Setup the add new filename area using CSS Grid -->
+        <form method="post">
+            
+        <div class="wrapper">
+         
+            <div class="intro">
+             <h5>To add a new Status enter the name and submit</h5>
+            
             </div>
+            <div class="t1">Status</div>
+            <div class="v1">
+             <input name ="sname" type="text" id="sname">
+            </div>
+            
+            <div class="b2">
+              <input type="submit" class="btn btn-info" 
+                                  value="Add Status">            
+            </div>
+         
         </div>
+        </form>
+        
         <!-- Setup footer display -->
         <?php  include 'footer.php'; ?>
     </body>
