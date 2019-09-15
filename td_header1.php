@@ -79,9 +79,20 @@
     <li class="nav-item">
       <a class="nav-link" href="td_projects.php">Projects</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link" href="td_statistics.php">Statistics</a>
-    </li>
+    <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop2" 
+               data-toggle="dropdown">
+                Statistics Menu
+            </a>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="./td_statistics.php">
+                    Open
+                </a>
+                <a class="dropdown-item" href="./td_statistics_closed.php">
+                    Closed
+                </a>
+            </div>
+        </li>
   </ul>
 </nav>
 <hr>

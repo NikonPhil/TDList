@@ -64,7 +64,7 @@
   <body>
       <!-- build display using BS4 containers -->
       <div class="container-fluid">
-          <h1>To Do List Dashboard - Open Tasks</h1>
+          <h1>To Do List Dashboard - Closed Tasks</h1>
           <br>
       </div>
       <!-- Modification for CSS Grid -->
@@ -164,7 +164,7 @@
         $sql = "SELECT count(t.task) AS series, p.Category AS labels "
             . "FROM td_tasks t JOIN td_category p "
             . "WHERE t.idtd_category = p.idtd_category "
-            . "AND t.idtd_status != 5 "
+            . "AND t.idtd_status = 5 "
             . "GROUP BY p.idtd_category";
         $result = mysqli_query($conn, $sql);
             if(!$result ) {
@@ -175,7 +175,7 @@
         $sql2 = "SELECT count(t.task) AS seriesb, p.priority AS labelsb "
             . "FROM td_tasks t JOIN td_priority p "
             . "WHERE t.idtd_priority = p.idtd_priority "
-            . "AND t.idtd_status != 5 "
+            . "AND t.idtd_status = 5 "
             . "GROUP BY p.idtd_priority";
         $result2 = mysqli_query($conn, $sql2);
             if(!$result2 ) {
@@ -186,7 +186,7 @@
         $sql3 = "SELECT count(t.task) AS seriesc, p.project_name AS labelsc "
             . "FROM td_tasks t JOIN td_projects p "
             . "WHERE t.idtd_projects = p.idtd_projects "
-            . "AND t.idtd_status != 5 "
+            . "AND t.idtd_status = 5 "
             . "GROUP BY p.idtd_projects";
         $result3 = mysqli_query($conn, $sql3);
             if(!$result3 ) {
@@ -212,7 +212,7 @@
         $sql7 = "SELECT count(t.task) AS seriesd, p.td_status AS labelsd "
             . "FROM td_tasks t JOIN td_status p "
             . "WHERE t.idtd_status = p.idtd_status "
-            . "AND t.idtd_status != 5 "
+            . "AND t.idtd_status = 5 "
             . "GROUP BY p.idtd_status";
         $result7 = mysqli_query($conn, $sql7);
             if(!$result7 ) {
