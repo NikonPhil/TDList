@@ -2,12 +2,11 @@
 
 <html>
   <head>
-    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
-    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
+    
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"> </script>
     <script type="text/javascript"src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.bundle.min.js"></script>
      
-        <?php include 'header1.php'; ?>
+        <?php include 'td_header1.php'; ?>
     <style>
     
      .g1 { grid-area: g1; }
@@ -28,6 +27,7 @@
     /* .wrapper > div { border: 1px solid black;} */
     .sum { grid-area: sum; }
     .t1  { grid-area: t1; }
+    .ct  { grid-area: ct; }
     .t2  { grid-area: t2; }
     .t3  { grid-area: t3; }
     .t4  { grid-area: t4; }
@@ -40,6 +40,7 @@
     .v4  { grid-area: v4; }
     .v5  { grid-area: v5; }
     .v6  { grid-area: v6; }
+    .v7  { grid-area: v7; }
     .ttl {
         display: grid;
         grid-template-columns: repeat(6, 1fr);
@@ -50,6 +51,7 @@
         padding: 5px;
         grid-template-areas: '.  sum sum sum sum sum'
                              '.  t1   t1  t1  v1  .  '
+                             '.  ct   ct  ct  v7  .  '
                              '.  t2   t2  t2  v2  .  '
                              '.  t3   t3  t3  v3  t4  '
                              '.  t5   t5  t5  v4  .  '
@@ -62,26 +64,27 @@
   <body>
       <!-- build display using BS4 containers -->
       <div class="container-fluid">
-          <h4>To Do List Dashboard</h4>
+          <h1>To Do List Dashboard</h1>
+          <br>
       </div>
       <!-- Modification for CSS Grid -->
       <div class="wrapper">
-        <div class="g1">
+        <div class="g1" style="border: solid 1px">
             <div class="chart-container">
                 <canvas id="mycanvas"></canvas>
             </div> 
         </div>
-        <div class="g2">
+        <div class="g2" style="border: solid 1px">
             <div class="chart-container">
                 <canvas id="mycanvas2"></canvas>
             </div>
         </div>
-        <div class="g3">
+        <div class="g3" style="border: solid 1px">
             <div class="chart-container">
                 <canvas id="mycanvas3"></canvas>
             </div>
         </div>
-        <div class="g4">
+        <div class="g4" style="border: solid 1px">
             <div class="chart-container">
                 <canvas id="mycanvas4"></canvas>
             </div>
@@ -93,13 +96,21 @@
                            </div>
                   </div>
                   <div class="t1">
-                    <p>Number of tasks</p>
+                    <p>Number of Open tasks</p>
                   </div>
                   <div class="v1">
-                            <?php
-                                echo '<p id="d4"></p>';
-                            ?>
+                    <?php
+                        echo '<p id="d4"></p>';
+                    ?>
                   </div>
+              <div class="ct">
+                <p>Number of Closed tasks</p>
+              </div>
+              <div class="v7">
+                <?php
+                echo '<p id="d10"></p>';
+                ?>
+              </div>
                   <div class="t2">
                     <p>Number of Projects</p>
                   </div>
@@ -149,56 +160,73 @@
             echo 'No Connection <br>';
             die('Could not connect : ' . mysqli_error());
         }   
-        
+        // Category Data
         $sql = "SELECT count(t.task) AS series, p.Category AS labels "
             . "FROM td_tasks t JOIN td_category p "
             . "WHERE t.idtd_category = p.idtd_category "
+            . "AND t.idtd_status != 5 "
             . "GROUP BY p.idtd_category";
         $result = mysqli_query($conn, $sql);
             if(!$result ) {
                 echo '<could not query db<br>';
                die('Could not select data: ' . mysqli_error($conn));
             }
+        // Priority Data    
         $sql2 = "SELECT count(t.task) AS seriesb, p.priority AS labelsb "
             . "FROM td_tasks t JOIN td_priority p "
             . "WHERE t.idtd_priority = p.idtd_priority "
+            . "AND t.idtd_status != 5 "
             . "GROUP BY p.idtd_priority";
         $result2 = mysqli_query($conn, $sql2);
             if(!$result2 ) {
                 echo '<could not query db<br>';
                die('Could not select data: ' . mysqli_error($conn));
             }
+        // Projects Data
         $sql3 = "SELECT count(t.task) AS seriesc, p.project_name AS labelsc "
             . "FROM td_tasks t JOIN td_projects p "
             . "WHERE t.idtd_projects = p.idtd_projects "
+            . "AND t.idtd_status != 5 "
             . "GROUP BY p.idtd_projects";
         $result3 = mysqli_query($conn, $sql3);
             if(!$result3 ) {
                 echo '<could not query db<br>';
                die('Could not select data: ' . mysqli_error($conn));
             }
-        $sql4 = "SELECT count(task) AS task_count FROM td_tasks";
+        // Status Data for open tasks
+        $sql4 = "SELECT count(task) AS task_count FROM td_tasks "
+            . "WHERE idtd_status != 5";
         $result4 = mysqli_query($conn, $sql4);
             if(!$result4 ) {
                 echo '<could not query db<br>';
                die('Could not select data: ' . mysqli_error($conn));
             }
+            
         $sql5 = "SELECT count(project_name) AS project_count FROM td_projects";
         $result5 = mysqli_query($conn, $sql5);
             if(!$result5 ) {
                 echo '<could not query db<br>';
                die('Could not select data: ' . mysqli_error($conn));
             }
+        // Status data for graph
         $sql7 = "SELECT count(t.task) AS seriesd, p.td_status AS labelsd "
             . "FROM td_tasks t JOIN td_status p "
             . "WHERE t.idtd_status = p.idtd_status "
+            . "AND t.idtd_status != 5 "
             . "GROUP BY p.idtd_status";
         $result7 = mysqli_query($conn, $sql7);
             if(!$result7 ) {
                 echo '<could not query db<br>';
                die('Could not select data: ' . mysqli_error($conn));
             }
-            
+        // Closed Tasks Data
+        $sql8 = "SELECT count(task) AS closed FROM td_tasks "
+            . "WHERE idtd_status = 5";
+        $result8 = mysqli_query($conn, $sql8);
+          if(!$result8) {
+            echo 'Could not Query db <br>';
+            die('could not select data: ' . mysqli_error($conn));
+          }
         
         //loop through the returned data
             $data = array();
@@ -246,6 +274,9 @@
             foreach ($result7 as $row) {
               $data7[] = $row;
             }
+            $data8 = mysqli_fetch_assoc($result8);
+            
+            // var_dump($data8);
             mysqli_close($conn);
             
         //print json_encode($data);
@@ -267,10 +298,11 @@ var newdata3 = JSON.parse( '<?php echo json_encode($data3) ?>' );
 var newdata4 = JSON.parse( '<?php echo json_encode($data7) ?>' );
 // Set up the values for the summary
 var tcount = JSON.parse('<?php echo json_encode($data4) ?>' );
+var tclosed = JSON.parse('<?php echo json_encode($data8) ?>');
 var pcount = JSON.parse('<?php echo json_encode($data5) ?>' );
 var days = JSON.parse('<?php echo json_encode($days) ?>' );
-//console.log("tcount");
-//console.log(tcount);
+console.log("tclosed");
+console.log(tclosed);
 //console.log("pcount");
 //console.log(pcount);
 //console.log("days");
@@ -282,6 +314,7 @@ document.getElementById("d6").innerHTML = days[1];
 document.getElementById("d7").innerHTML = days[0];
 document.getElementById("d8").innerHTML = days[2];
 document.getElementById("d9").innerHTML = days[3];
+document.getElementById("d10").innerHTML = tclosed['closed'];
 //split the object into two arrays
 var category = [];
 var count = [];
@@ -433,6 +466,6 @@ var ctx4 = $("#mycanvas4");
         data: chartdata4
       });
   </script>
-  <?php include './footer.php'; ?>
+  <?php include './td_footer.php'; ?>
   </body>
 </html>

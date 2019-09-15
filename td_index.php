@@ -3,7 +3,7 @@
 <html>
     <head>
         <!-- CSS files added via header1.php -->
-        <?php include 'header1.php'; ?>
+        <?php include 'td_header1.php'; ?>
         
         <title>To Do List Main Page</title>
         <style>
@@ -57,16 +57,16 @@
         
             if ($_POST['add'] == "Add") {
                 // echo 'In the add clause <br>';
-                $filenameID = $_POST['fname'];
-                $projectID = $_POST['pname'];
-                $statusID = $_POST['sname'];
-                $classID = $_POST['clname'];
-                $priorityID = $_POST['prname'];
-                $categoryID = $_POST['caname'];
+                $filenameID = addslashes($_POST['fname']);
+                $projectID = addslashes($_POST['pname']);
+                $statusID = addslashes($_POST['sname']);
+                $classID = addslashes($_POST['clname']);
+                $priorityID = addslashes($_POST['prname']);
+                $categoryID = addslashes($_POST['caname']);
                 //$Entry_Date = $_POST['edate'];
                 //$Comp_Date = $_POST['cdate'];
                 $details = addslashes($_POST['details']);
-                $task = $_POST['task'];
+                $task = addslashes($_POST['task']);
                 $date = date('Y-m-d H:i:s');
                 $sql = "INSERT INTO td_tasks (id_tasks, task, details, "
                     . "entry_date, idtd_filename, idtd_category, "
@@ -254,7 +254,7 @@
         </form>
         <?php 
         // Set up page footer
-        include 'footer.php';
+        include 'td_footer.php';
         ?>
         </body>
 </html>

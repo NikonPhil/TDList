@@ -2,10 +2,9 @@
 
 <html>
     <head>
-        <!-- CSS files added via header1.php -->
-        <?php include 'header1.php'; ?>
-        
-        <title>Priority data</title>
+        <!-- CSS files included in the header1.php file -->
+         <?php include 'td_header1.php'; ?>
+        <title>Class Management</title>
     <style>
     
      .intro { grid-area: intro; }
@@ -28,92 +27,88 @@
                             '.     b2     .      .     .     .';
     }
     
-    </style>    
+    </style>        
     </head>
     <body>
         
-       
-       <div class="container-fluid">
-        <h1>List of existing Priorities</h1> 
+        <div class="container-fluid">
+        <h1>List of existing Classes</h1> 
         </div>
-        <?php
-        // Setup database connection
+        <!-- Setup the database connection or exit -->
+       <?php
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
-        $page_id = "Priority";
+        $page_id = "Classes";
         if(! $conn) {
                 die('Could not connect : ' . mysqli_error());
-        } 
-        // setup POST handling to add a new priority
-        if(isset($_POST['pname'])) {
+        }
+        // setup POST handling to add a new class
+        if(isset($_POST['clname'])) {
             
-            $priority = $_POST['pname'];
-            $sql = "INSERT INTO td_priority (idtd_priority, priority)" . 
-                    "VALUES (NULL, '$priority')";
+            $class = $_POST['clname'];
+            $sql = "INSERT INTO td_class (idtd_class, class)" . 
+                    "VALUES (NULL, '$class')";
             $result = mysqli_query($conn, $sql);
 
             if(! $result ) {
                die('Could not insert data: ' . mysqli_error($conn));
-            }           
-            
-        } // End of Post processing
+            }             
+        } 
         
         
-        // setup query to select current data
-        $sql = "SELECT priority FROM td_priority";
+        // setup query to display current data
+        $sql = "SELECT class FROM td_class";
                 
         $result = mysqli_query($conn, $sql);
         if(! $result ) {
                die('Could not select data: ' . mysqli_error($conn));
-            } 
+            }
         // show current data in a table ?>
-         <div class="container-fluid">
-          <div style="height: 450px; max-height:450px; overflow-y: scroll">
+        <div class="container-fluid">
+         <div style="height: 450px; max-height:450px; overflow-y: scroll">
            <div class="row">
               <div class="col-sm-4">
                 <table class="table table-bordered table-sm table-striped">
                   <thead class="thead-dark">
-                    <th>Status</th>                                                
+                    <th>Classes</th>                                                
                   </thead>
                     <?php
                         while ($row = mysqli_fetch_array($result)) {
-                            echo '<tr>';
-                             echo '<td>' . $row['priority'] . '</td>';
-                            echo '</tr>';
-                        }
-                    ?>
+                          echo '<tr>';
+                            echo '<td>' . $row['class'] . '</td>';
+                            // echo '<td>' . $row['filename'] . '</td>';
+                          echo '</tr>';
+                        } ?>
                 </table>
               </div>
-              <div class="col-sm-8">
-               <!-- dummy cell to maintain spacing -->
-              </div>
+               <div class="col-sm-8">
+
+               </div>
            </div>
-          </div>
-           <hr>
          </div>
-        <!-- Setup the add new priority area using CSS Grid -->
+           <hr>
+        </div>
+        <!-- Setup the add new filename area using CSS Grid -->
         <form method="post">
             
         <div class="wrapper">
          
             <div class="intro">
-             <h5>To add a new Priority enter the name and submit</h5>
+             <h5>To add a new Class enter the name and submit</h5>
             
             </div>
-            <div class="t1">Priority</div>
+            <div class="t1">Classes</div>
             <div class="v1">
-             <input name = "pname" type = "text" id = "pname">
+             <input name ="clname" type="text" id="clname">
             </div>
             
             <div class="b2">
-              <input type="submit" class="btn btn-info" value="Add Priority">          
+              <input type="submit" class="btn btn-info" value="Add Class">           
             </div>
          
         </div>
         </form>
-        
-        <!-- Set up the footer -->
-       <?php  
-            include 'footer.php'; 
-       ?>
+       
+       <!-- Display the footer -->
+      <?php  include 'td_footer.php';?>  
     </body>
 </html>

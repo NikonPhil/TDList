@@ -2,9 +2,9 @@
 
 <html>
     <head>
-        <!-- CSS files included in the header1.php file -->
-         <?php include 'header1.php'; ?>
-        <title>Class Management</title>
+        <!-- CSS files included in header1.php -->
+        <?php include 'td_header1.php';?>
+        <title>Category Management</title>
     <style>
     
      .intro { grid-area: intro; }
@@ -27,65 +27,65 @@
                             '.     b2     .      .     .     .';
     }
     
-    </style>        
+    </style>    
     </head>
     <body>
         
         <div class="container-fluid">
-        <h1>List of existing Classes</h1> 
+          <h1>List of existing Categories</h1> 
         </div>
-        <!-- Setup the database connection or exit -->
-       <?php
+        <!-- setup database connection, exit on failure
+        <?php
+        
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
-        $page_id = "Classes";
+        $page_id = "Category";
         if(! $conn) {
                 die('Could not connect : ' . mysqli_error());
         }
-        // setup POST handling to add a new class
-        if(isset($_POST['clname'])) {
+        
+        // setup POST handling to add a new priority, called from within
+        if(isset($_POST['cname'])) {                                    
             
-            $class = $_POST['clname'];
-            $sql = "INSERT INTO td_class (idtd_class, class)" . 
-                    "VALUES (NULL, '$class')";
+            $category = $_POST['cname'];                                            
+            $sql = "INSERT INTO td_category (idtd_category, category)" . 
+                    "VALUES (NULL, '$category')";
             $result = mysqli_query($conn, $sql);
 
             if(! $result ) {
                die('Could not insert data: ' . mysqli_error($conn));
-            }             
-        } 
+            }           
+        } // End of POST handling
         
         
-        // setup query to display current data
-        $sql = "SELECT class FROM td_class";
+        // setup query to select current data
+        $sql = "SELECT category FROM td_category";
                 
         $result = mysqli_query($conn, $sql);
         if(! $result ) {
                die('Could not select data: ' . mysqli_error($conn));
             }
-        // show current data in a table ?>
+        ?>
+        <!-- Show current data. -->
         <div class="container-fluid">
-         <div style="height: 450px; max-height:450px; overflow-y: scroll">
+          <div style="height: 450px; max-height:450px; overflow-y: scroll">
            <div class="row">
               <div class="col-sm-4">
                 <table class="table table-bordered table-sm table-striped">
                   <thead class="thead-dark">
-                    <th>Classes</th>                                                
+                    <th>Category</th>                                                
                   </thead>
                     <?php
-                        while ($row = mysqli_fetch_array($result)) {
-                          echo '<tr>';
-                            echo '<td>' . $row['class'] . '</td>';
-                            // echo '<td>' . $row['filename'] . '</td>';
-                          echo '</tr>';
-                        } ?>
+                  while ($row = mysqli_fetch_array($result)) {
+                    echo '<tr>';
+                      echo '<td>' . $row['category'] . '</td>';
+                      echo '</tr>';
+                  }
+                  ?>
                 </table>
               </div>
-               <div class="col-sm-8">
-
-               </div>
            </div>
-         </div>
-           <hr>
+          </div>
+            <hr>
         </div>
         <!-- Setup the add new filename area using CSS Grid -->
         <form method="post">
@@ -93,22 +93,24 @@
         <div class="wrapper">
          
             <div class="intro">
-             <h5>To add a new Class enter the name and submit</h5>
+             <h5>To add a new Category enter the name and submit</h5>
             
             </div>
-            <div class="t1">Classes</div>
+            <div class="t1">Category</div>
             <div class="v1">
-             <input name ="clname" type="text" id="clname">
+             <input name = "cname" type = "text" id = "cname">
             </div>
             
             <div class="b2">
-              <input type="submit" class="btn btn-info" value="Add Class">           
+              <input type="submit" class="btn btn-info" 
+                              value="Add Category">           
             </div>
          
         </div>
-        </form>
-       
-       <!-- Display the footer -->
-      <?php  include 'footer.php';?>  
+            </form>
+        
+        <!-- Show the footer -->
+        <?php include 'td_footer.php';
+        ?>
     </body>
 </html>

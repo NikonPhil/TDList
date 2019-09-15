@@ -2,9 +2,10 @@
 
 <html>
     <head>
-        <!-- CSS files included in header1.php -->
-        <?php include 'header1.php';?>
-        <title>Category Management</title>
+        <!-- CSS files added via header1.php -->
+        <?php include 'td_header1.php'; ?>
+        
+        <title>Priority data</title>
     <style>
     
      .intro { grid-area: intro; }
@@ -31,86 +32,88 @@
     </head>
     <body>
         
-        <div class="container-fluid">
-          <h1>List of existing Categories</h1> 
+       
+       <div class="container-fluid">
+        <h1>List of existing Priorities</h1> 
         </div>
-        <!-- setup database connection, exit on failure
         <?php
-        
+        // Setup database connection
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
-        $page_id = "Category";
+        $page_id = "Priority";
         if(! $conn) {
                 die('Could not connect : ' . mysqli_error());
-        }
-        
-        // setup POST handling to add a new priority, called from within
-        if(isset($_POST['cname'])) {                                    
+        } 
+        // setup POST handling to add a new priority
+        if(isset($_POST['pname'])) {
             
-            $category = $_POST['cname'];                                            
-            $sql = "INSERT INTO td_category (idtd_category, category)" . 
-                    "VALUES (NULL, '$category')";
+            $priority = $_POST['pname'];
+            $sql = "INSERT INTO td_priority (idtd_priority, priority)" . 
+                    "VALUES (NULL, '$priority')";
             $result = mysqli_query($conn, $sql);
 
             if(! $result ) {
                die('Could not insert data: ' . mysqli_error($conn));
             }           
-        } // End of POST handling
+            
+        } // End of Post processing
         
         
         // setup query to select current data
-        $sql = "SELECT category FROM td_category";
+        $sql = "SELECT priority FROM td_priority";
                 
         $result = mysqli_query($conn, $sql);
         if(! $result ) {
                die('Could not select data: ' . mysqli_error($conn));
-            }
-        ?>
-        <!-- Show current data. -->
-        <div class="container-fluid">
+            } 
+        // show current data in a table ?>
+         <div class="container-fluid">
           <div style="height: 450px; max-height:450px; overflow-y: scroll">
            <div class="row">
               <div class="col-sm-4">
                 <table class="table table-bordered table-sm table-striped">
                   <thead class="thead-dark">
-                    <th>Category</th>                                                
+                    <th>Status</th>                                                
                   </thead>
                     <?php
-                  while ($row = mysqli_fetch_array($result)) {
-                    echo '<tr>';
-                      echo '<td>' . $row['category'] . '</td>';
-                      echo '</tr>';
-                  }
-                  ?>
+                        while ($row = mysqli_fetch_array($result)) {
+                            echo '<tr>';
+                             echo '<td>' . $row['priority'] . '</td>';
+                            echo '</tr>';
+                        }
+                    ?>
                 </table>
+              </div>
+              <div class="col-sm-8">
+               <!-- dummy cell to maintain spacing -->
               </div>
            </div>
           </div>
-            <hr>
-        </div>
-        <!-- Setup the add new filename area using CSS Grid -->
+           <hr>
+         </div>
+        <!-- Setup the add new priority area using CSS Grid -->
         <form method="post">
             
         <div class="wrapper">
          
             <div class="intro">
-             <h5>To add a new Category enter the name and submit</h5>
+             <h5>To add a new Priority enter the name and submit</h5>
             
             </div>
-            <div class="t1">Category</div>
+            <div class="t1">Priority</div>
             <div class="v1">
-             <input name = "cname" type = "text" id = "cname">
+             <input name = "pname" type = "text" id = "pname">
             </div>
             
             <div class="b2">
-              <input type="submit" class="btn btn-info" 
-                              value="Add Category">           
+              <input type="submit" class="btn btn-info" value="Add Priority">          
             </div>
          
         </div>
-            </form>
+        </form>
         
-        <!-- Show the footer -->
-        <?php include 'footer.php';
-        ?>
+        <!-- Set up the footer -->
+       <?php  
+            include 'td_footer.php'; 
+       ?>
     </body>
 </html>

@@ -3,7 +3,7 @@
 <html>
     <head>
         <!-- CSS files added via header1.php -->
-        <?php include 'header1.php'; ?>
+        <?php include 'td_header1.php'; ?>
 
         <title>Add a new project to the database</title>
     <style>
@@ -119,7 +119,7 @@
         
         <!-- Set up the footer -->
         <?php  
-            include 'footer.php'; 
+            include 'td_footer.php'; 
         ?>
     
     </body>

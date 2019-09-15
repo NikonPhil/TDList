@@ -3,7 +3,7 @@
 <html>
   <head>
       <!-- CSS files added via header1.php -->
-      <?php include 'header1.php'; ?>
+      <?php include 'td_header1.php'; ?>
     <style>
     
      .intro { grid-area: intro; }
@@ -113,7 +113,7 @@
         </form>
         
         <!-- Setup footer display -->
-        <?php  include 'footer.php'; ?>
+        <?php  include 'td_footer.php'; ?>
     </body>
 </html>
 

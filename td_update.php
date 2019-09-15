@@ -3,10 +3,8 @@
 <html>
     <head>
         <!-- CSS files included via header1.php -->
-         <?php include 'header1.php'; ?> 
+         <?php include 'td_header1.php'; ?> 
          <title>To Do List Update Page</title>  
-          
-         
     </head>
     <body>
         <div class="container-fluid">
@@ -25,22 +23,24 @@
         if($_POST['upd'] == "Select") {
 
             $pid = $_POST['project_id'];
-            echo '<div class="container-fluid" >';
-            echo "<h5>Select a task to edit<h5>" . '<br>';
-            echo '</div>';
+           
             $sql = "SELECT * FROM to_do_list.join_example "
                     . "WHERE project_id = $pid "
-                    . "ORDER BY priority";
+                    . "ORDER BY id_priority";
             $result = mysqli_query($conn, $sql);
             if(!$result) {
                 die('Could not select data: ' . mysqli_error($conn));
             }
+            echo '<div class="container-fluid" >';
+            echo "<h5>Select a task to edit<h5>" . '<br>';
+            echo '</div>';
             ?>
         <!-- Display the task table -->
             <div class="container-fluid" >
             <div style="height: 450px; max-height:450px; overflow-y: scroll">
              <div class="row">
-              <div class="col-sm-12"> 
+              <div class="col-sm-12">
+                <form method="post" action="td_update_task.php">
                 <table class="table table-bordered table-sm table-striped">
                   <thead class="thead-dark">
                     <th>Task ID</th>
@@ -55,8 +55,7 @@
                   </thead>
                     <?php
                     // Create the ability to select a task by it's task_id
-                    // Call update_task.php with selection
-                    echo '<form method="post" action="update_task.php">';
+                    // Call td_update_task.php with selection
                     while ($prj = mysqli_fetch_assoc($result)) {
                       echo '<tr>';
                         echo '<td>';
@@ -73,16 +72,16 @@
                         echo '<td>' . $prj['entry_date'] . '</td>';
                       echo '</tr>';
                     } 
-                    echo '</form>';
                     ?>
                 </table>
+                </form>
               </div>  
              </div>
             </div>
              <hr>
          </div>
            <?php // Leaving the upd = select code
-           }  // else { // display the current table
+           }  else { // display the current table
            
             $sql7 = "SELECT * FROM task_join";
         
@@ -109,28 +108,28 @@
                   </thead>
                   <tbody>
                   <tr>
-                  <td class="align-middle">
-                      Choose a Project to modify and press Select Update
-                  </td>
-                  <td class="align-middle">
-                      
-                      <?php
-                        echo '<select name="project_id">';        
-                        foreach ($result as $row) {                             
-                          echo "<option value=\"{$row['idtd_projects']}\">"
-                            . "{$row['project_name']}</option>";
-                        }
-                        echo "</select>";
-                      ?>             
-                  </td>
-                  <td class="align-middle">
-                      <button class="btn btn-info" name="upd" value="Select" 
-                            type="submit">Select Project</button>
-                  </td>
+                    <td class="align-middle">
+                        Choose a Project to modify and press Select Update
+                    </td>
+                    <td class="align-middle">
+
+                        <?php
+                          echo '<select name="project_id">';        
+                          foreach ($result as $row) {                             
+                            echo "<option value=\"{$row['idtd_projects']}\">"
+                              . "{$row['project_name']}</option>";
+                          }
+                          echo "</select>";
+                        ?>             
+                    </td>
+                    <td class="align-middle">
+                        <button class="btn btn-info" name="upd" value="Select" 
+                              type="submit">Select Project</button>
+                    </td>
                   </tr>
                   </tbody>
-              </table>
-              </form>
+                  </table>
+                </form>
               </div>
              </div>
             </div>
@@ -183,9 +182,9 @@
         
         <?php 
         
-         //  } // end of POST processing
+          }  // end of POST processing
         // set up footer display   
-        include 'footer.php';
+        include 'td_footer.php';
         ?>
         </body>
 </html>

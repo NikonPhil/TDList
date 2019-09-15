@@ -3,7 +3,7 @@
 <html>
     <head>
         <!-- CSS files included in header1.php -->
-         <?php include 'header1.php'; ?>
+         <?php include 'td_header1.php'; ?>
         <title>Add a new filename to the database</title>
      <style>
     
@@ -30,9 +30,11 @@
     </style>
     </head>
     <body>
-       
+        <div class="container-fluid">
+            <h1>List of existing filenames</h1>
+        </div>
 <?php
-        echo '<h1>List of existing filenames</h1>';
+
         // Setup database connection and exit if there is a problem
         $conn = mysqli_connect($DBHost, $DBUser, $DBPassword, $DBName);
         $page_id = "Filename";
@@ -132,6 +134,6 @@
         </div>
             </form>
         <!-- Add the footer code -->
-        <?php include 'footer.php'; ?>
+        <?php include 'td_footer.php'; ?>
     </body>
 </html>

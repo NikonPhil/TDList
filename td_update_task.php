@@ -5,7 +5,7 @@
         <meta charset="UTF-8">
         <!-- CSS files included via header1.php -->
         <title>Update Task Details</title>
-        <?php include 'header1.php'; ?>    
+        <?php include 'td_header1.php'; ?>    
          
     </head>
     <body>
@@ -15,7 +15,7 @@
         if(! $conn) {
             die('Could not connect : ' . mysqli_error());
         }   
-        // Set up pOST processing for task selection
+        // Set up POST processing for task selection
         if(isset($_POST['task_s'])) {
             
             $task_id = $_POST['task_s'];
@@ -27,7 +27,7 @@
                 echo $sql;
                 die('Could not select data: ' . mysqli_error($conn));
             }
-            
+            $prj = mysqli_fetch_assoc($result);
             $sql2 = "SELECT * FROM td_comments WHERE idtd_tasks = $task_id "
                     . "ORDER BY entry_date DESC";
             $result2 = mysqli_query($conn, $sql2);
@@ -74,17 +74,30 @@
         } elseif (!$result3 = mysqli_query($conn, $sql3)) {
              echo "Error: inserting into table" . $sql3 . "<br>" . mysqli_error($conn);   
             } else {
-            header("Location: ./index.php");
+            header("Location: ./td_index.php");
         }
         } // End of 'mod' POST processing
         ?>
         <!-- Display the task table -->
+        <div class="container-fluid">
+          <table class="table table-sm">
+            <tr>
+              <td>
+                <?php
+                  echo '<h4>Project :- ' . $prj['project_name'] 
+                      . '</h4';
+                ?>
+              </td>
+            </tr>
+          </table>
+        </div>
         <form method="post" id="task_upd">
             <div class="container-fluid">
             <div style="height: 250px; max-height:350px; overflow-y: scroll">
              <div class="row">
-              <div class="col-sm-12">  
-                <table class="table table-bordered table-sm table-striped">
+              <div class="col-sm-12">
+                 
+                <table class="table table-bordered table-sm table-striped"> 
                   <thead class="thead-dark">
                     <th>Task ID</th>
                     <th>Task</th>
@@ -98,7 +111,6 @@
                   </thead>
                   <tbody>
                     <?php
-                    $prj = mysqli_fetch_assoc($result);
                       echo '<tr>';
                       echo '<td class="align-middle" >';
                       echo '<input class="clear" type="text" name="task_id" '
@@ -252,7 +264,7 @@
         </form>
         <?php
         // Setup the footer display
-        include 'footer.php';
+        include 'td_footer.php';
         ?>
     </body>
 </html>
